@@ -16,14 +16,13 @@ module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
       entry: "./src/index.tsx",
       output: {
         path: path.resolve(__dirname, "public"),
-        //publicPath: "/",
         filename: "bundle.js"
       },
       resolve: {
         extensions: [".tsx", ".ts", ".js", ".jsx"],
         alias: {
-          components: path.resolve(__dirname, "src/utilities/"),
-          assets: path.resolve(__dirname, "assets/")
+          components: path.resolve(__dirname, "src/utilities/")
+          //assets: path.resolve(__dirname, "assets/")
         }
       },
       module: {
@@ -47,25 +46,13 @@ module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
             loader: "babel-loader",
             exclude: /node_modules/
           },
-          // {
-          //   test: /\.(png|jpe?g|gif)$/i,
-          //   loader: "file-loader",
-          //   options: {
-          //     outputPath: "images",
-          //     name: "dirname/[contenthash].[ext]"
-          //   }
-          // },
-          // {
           {
-            test: /\.jpe?g$/,
-            use: [
-              {
-                loader: "url-loader",
-                options: {
-                  limit: 5000
-                }
-              }
-            ]
+            test: /\.(png|jpe?g|gif)$/i,
+            loader: "file-loader",
+            options: {
+              outputPath: "images",
+              name: "[name].[ext]"
+            }
           },
           {
             test: /\.s?css$/,
@@ -100,7 +87,8 @@ module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
         publicPath: "/",
         hot: true,
         historyApiFallback: true,
-        port: 3000
+        port: 3000,
+        open: true
       }
     },
     modeConfig(mode),

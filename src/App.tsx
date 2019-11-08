@@ -1,11 +1,11 @@
 import React from "react";
-//import avocado from 'assets/avocado.png'
+import avocado from "../assets/avocado.png";
 
 const App = () => {
   return (
     <div className="app">
-      {/* <img src={avocado} /> */}
-      <p>HUUIIIII</p>
+      <img src={avocado} />
+      <p>App</p>
       <div className="root"></div>
     </div>
   );
