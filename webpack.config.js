@@ -16,7 +16,7 @@ module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
       entry: "./src/index.tsx",
       output: {
         path: path.resolve(__dirname, "public"),
-        publicPath: "./public",
+        //publicPath: "/",
         filename: "bundle.js"
       },
       resolve: {
@@ -47,23 +47,15 @@ module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
             loader: "babel-loader",
             exclude: /node_modules/
           },
-          {
-            test: /\.(png|jpe?g|gif)$/i,
-            loader: "file-loader",
-            options: {
-              outputPath: "images",
-              name: "dirname/[contenthash].[ext]"
-            }
-          },
-          {
-            test: /\.html$/,
-            use: [
-              {
-                loader: "html-loader",
-                options: { minimize: true }
-              }
-            ]
-          },
+          // {
+          //   test: /\.(png|jpe?g|gif)$/i,
+          //   loader: "file-loader",
+          //   options: {
+          //     outputPath: "images",
+          //     name: "dirname/[contenthash].[ext]"
+          //   }
+          // },
+          // {
           {
             test: /\.jpe?g$/,
             use: [
@@ -100,11 +92,12 @@ module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
           title: "Life chart",
           filename: "index.html",
           template: "src/index.html",
-          minify: false
+          minify: false,
+          cache: false
         })
       ],
       devServer: {
-        //publicPath: "/public/",
+        publicPath: "/",
         hot: true,
         historyApiFallback: true,
         port: 3000

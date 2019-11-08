@@ -5,7 +5,7 @@ const App = () => {
   return (
     <div className="app">
       {/* <img src={avocado} /> */}
-      <p>App</p>
+      <p>HUUIIIII</p>
       <div className="root"></div>
     </div>
   );
