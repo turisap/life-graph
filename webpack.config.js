@@ -1,3 +1,4 @@
+const path = require("path");
 const webpack = require("webpack");
 const modeConfig = mode => require(`./build-utils/webpack.${mode}`)(mode);
 const webpackMerge = require("webpack-merge");
@@ -14,12 +15,16 @@ module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
       mode,
       entry: "./src/index.tsx",
       output: {
-        path: __dirname + "/public",
+        path: path.resolve(__dirname, "public"),
         publicPath: "./public",
         filename: "bundle.js"
       },
       resolve: {
-        extensions: [".tsx", ".ts", ".js", ".jsx"]
+        extensions: [".tsx", ".ts", ".js", ".jsx"],
+        alias: {
+          components: path.resolve(__dirname, "src/utilities/"),
+          assets: path.resolve(__dirname, "assets/")
+        }
       },
       module: {
         rules: [
@@ -92,14 +97,17 @@ module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
         }),
         new webpack.HotModuleReplacementPlugin(),
         new HtmlWebPackPlugin({
-          filename: "./index.html"
+          title: "Life chart",
+          filename: "index.html",
+          template: "src/index.html",
+          minify: false
         })
       ],
       devServer: {
-        contentBase: "./dist",
+        //publicPath: "/public/",
         hot: true,
         historyApiFallback: true,
-        port: 9000
+        port: 3000
       }
     },
     modeConfig(mode),
