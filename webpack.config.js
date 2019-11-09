@@ -47,12 +47,12 @@ module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
             exclude: /node_modules/
           },
           {
-            test: /\.(png|jpe?g|gif)$/i,
-            loader: "file-loader",
-            options: {
-              outputPath: "images",
-              name: "[name].[ext]"
-            }
+            test: /\.(jpe?g|png|gif)$/,
+            use: ["file-loader"]
+          },
+          {
+            test: /\.(woff|woff2|eot|ttf|otf)$/,
+            use: ["file-loader"]
           },
           {
             test: /\.s?css$/,
@@ -88,7 +88,13 @@ module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
         hot: true,
         historyApiFallback: true,
         port: 3000,
-        open: true
+        open: true,
+        stats: {
+          colors: true,
+          hash: false,
+          timing: true,
+          chunks: true
+        }
       }
     },
     modeConfig(mode),
