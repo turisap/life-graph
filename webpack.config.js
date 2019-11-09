@@ -5,6 +5,9 @@ const webpackMerge = require("webpack-merge");
 const presetConfig = require("./build-utils/loadPresets");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
+const postcssPresetEnv = require("postcss-preset-env");
+const autoprefixer = require("autoprefixer");
+const stylelint = require("stylelint");
 
 // TODO webpack polyfill fo css (postcss) for prod
 // TODO webpack manifest for prod
@@ -21,8 +24,8 @@ module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
       resolve: {
         extensions: [".tsx", ".ts", ".js", ".jsx"],
         alias: {
-          components: path.resolve(__dirname, "src/utilities/")
-          //assets: path.resolve(__dirname, "assets/")
+          components: path.resolve(__dirname, "src/components/"),
+          assets: path.resolve(__dirname, "assets/")
         }
       },
       module: {
@@ -62,6 +65,21 @@ module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
               },
               {
                 loader: "css-loader"
+              },
+              // {
+              //   loader: "postcss-loader",
+              //   options: {
+              //     parser: "sugarss",
+              //     ident: "postcss",
+              //     plugins: () => [
+              //       postcssPresetEnv(),
+              //       autoprefixer({ grid: "autoplace" }),
+              //       stylelint()
+              //     ]
+              //   }
+              // }
+              {
+                loader: "sass-loader"
               }
             ]
           }
@@ -71,8 +89,7 @@ module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
         new webpack.ProgressPlugin(),
         new MiniCssExtractPlugin({
           filename: "[name].css",
-          chunkFilename: "[id].css",
-          hmr: process.env.NODE_ENV === "development"
+          chunkFilename: "[id].css"
         }),
         new webpack.HotModuleReplacementPlugin(),
         new HtmlWebPackPlugin({

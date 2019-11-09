@@ -1,0 +1,7 @@
+.chart {
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 30px 50px;
+  transform: rotate(90deg);
+  color: red;
+}
