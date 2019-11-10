@@ -1,12 +1,14 @@
 import React from "react";
-import "./styles.scss";
+import "./styles.css";
 
 const Chart = () => {
   return (
     <div className="chart">
-      <h2>trololo</h2>
+      <h2>trolпорпорпорolo</h2>
+      <h2>trolпорпорпорolo</h2>
+      <h2>trolпорпорпорolo</h2>
     </div>
   );
 };
 
-export default Chart;
+export { Chart };

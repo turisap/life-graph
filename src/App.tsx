@@ -1,13 +1,15 @@
 import React from "react";
-import avocado from "../assets/avocado.png";
-import Chart from "./components/Chart";
+//import avocado from "../assets/avocado.png";
+import { Chart } from "./components/Chart";
+//import Cool from "./components/Cool";
 
 const App = () => {
   return (
     <div>
-      <img src={avocado} />
-      <p>A,dsfgdf</p>
+      {/* <img src={avocado} /> */}
+      <p>Apppppppppppppppppp</p>
       <Chart />
+      {/* <Cool /> */}
     </div>
   );
 };

@@ -11,6 +11,7 @@ const stylelint = require("stylelint");
 
 // TODO webpack polyfill fo css (postcss) for prod
 // TODO webpack manifest for prod
+// TODO https://github.com/NMFR/optimize-css-assets-webpack-plugin for prod
 
 module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
   return webpackMerge(
@@ -22,7 +23,7 @@ module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
         filename: "bundle.js"
       },
       resolve: {
-        extensions: [".tsx", ".ts", ".js", ".jsx"],
+        extensions: [".js", ".jsx", ".ts", ".tsx"],
         alias: {
           components: path.resolve(__dirname, "src/components/"),
           assets: path.resolve(__dirname, "assets/")
@@ -61,15 +62,20 @@ module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
             test: /\.s?css$/,
             use: [
               {
-                loader: MiniCssExtractPlugin.loader
+                loader: MiniCssExtractPlugin.loader,
+                options: {
+                  reloadAll: true
+                }
               },
-              {
-                loader: "css-loader"
-              },
+              "css-loader",
+              //"postcss-loader",
+              "sass-loader"
+              // {
+              //   loader: "css-loader"
+              // },
               // {
               //   loader: "postcss-loader",
               //   options: {
-              //     parser: "sugarss",
               //     ident: "postcss",
               //     plugins: () => [
               //       postcssPresetEnv(),
@@ -77,10 +83,10 @@ module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
               //       stylelint()
               //     ]
               //   }
+              // },
+              // {
+              //   loader: "sass-loader"
               // }
-              {
-                loader: "sass-loader"
-              }
             ]
           }
         ]
@@ -95,7 +101,7 @@ module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
         new HtmlWebPackPlugin({
           title: "Life chart",
           filename: "index.html",
-          template: "src/index.html",
+          template: "src/template.html",
           minify: false,
           cache: false
         })
@@ -113,8 +119,8 @@ module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
           chunks: true
         }
       }
-    },
-    modeConfig(mode),
-    presets ? presetConfig({ mode, presets }) : null
+    }
+    // modeConfig(mode),
+    // presets ? presetConfig({ mode, presets }) : null
   );
 };
