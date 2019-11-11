@@ -62,12 +62,7 @@ module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
           {
             test: /\.s?css$/,
             use: [
-              {
-                loader: MiniCssExtractPlugin.loader,
-                options: {
-                  reloadAll: true
-                }
-              },
+              MiniCssExtractPlugin.loader,
               "css-loader",
               "postcss-loader",
               "resolve-url-loader",
@@ -94,7 +89,7 @@ module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
       devServer: {
         publicPath: "/packs/",
         contentBase: path.join(__dirname, "public/packs"),
-        hot: true,
+        //hot: true,
         historyApiFallback: true,
         port: 3000,
         open: true,
@@ -105,8 +100,8 @@ module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
           chunks: true
         }
       }
-    },
-    modeConfig(mode),
-    presets ? presetConfig({ mode, presets }) : null
+    }
+    //modeConfig(mode),
+    //presets ? presetConfig({ mode, presets }) : null
   );
 };

@@ -8,7 +8,7 @@
     "webpack": "webpack",
     "debug": "node --inspect --inspect-brk ./node_modules/webpack/bin/webpack.js",
     "prod": "npm run webpack -- --env.mode production",
-    "dev": "npm run server -- --env.mode development --hot",
+    "dev": "npm run server -- --env.mode development",
     "prod:debug": "npm run debug -- --env.mode production",
     "prod:analyze": "npm run prod -- --env.presets analyze",
     "prod:compress": "npm run prod -- --env.presets compress",
