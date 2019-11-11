@@ -19,7 +19,8 @@ module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
       mode,
       entry: "./src/index.tsx",
       output: {
-        path: path.resolve(__dirname, "public"),
+        path: path.resolve(__dirname, "public/packs"),
+        publicPath: "/packs/",
         filename: "bundle.js"
       },
       resolve: {
@@ -107,7 +108,8 @@ module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
         })
       ],
       devServer: {
-        publicPath: "/",
+        publicPath: "/packs/",
+        contentBase: path.join(__dirname, "public/packs"),
         hot: true,
         historyApiFallback: true,
         port: 3000,

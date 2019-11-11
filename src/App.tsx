@@ -7,7 +7,7 @@ const App = () => {
   return (
     <div>
       {/* <img src={avocado} /> */}
-      <p>Apppppppppppppppppp</p>
+      <p>App</p>
       <Chart />
       {/* <Cool /> */}
     </div>

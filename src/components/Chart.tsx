@@ -5,8 +5,6 @@ const Chart = () => {
   return (
     <div className="chart">
       <h2>trolпорпорпорolo</h2>
-      <h2>trolпорпорпорolo</h2>
-      <h2>trolпорпорпорolo</h2>
     </div>
   );
 };
