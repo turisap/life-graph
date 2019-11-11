@@ -69,25 +69,9 @@ module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
                 }
               },
               "css-loader",
-              //"postcss-loader",
+              "postcss-loader",
+              "resolve-url-loader",
               "sass-loader"
-              // {
-              //   loader: "css-loader"
-              // },
-              // {
-              //   loader: "postcss-loader",
-              //   options: {
-              //     ident: "postcss",
-              //     plugins: () => [
-              //       postcssPresetEnv(),
-              //       autoprefixer({ grid: "autoplace" }),
-              //       stylelint()
-              //     ]
-              //   }
-              // },
-              // {
-              //   loader: "sass-loader"
-              // }
             ]
           }
         ]
@@ -121,8 +105,8 @@ module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
           chunks: true
         }
       }
-    }
-    // modeConfig(mode),
-    // presets ? presetConfig({ mode, presets }) : null
+    },
+    modeConfig(mode),
+    presets ? presetConfig({ mode, presets }) : null
   );
 };
