@@ -1,16 +1,15 @@
-import React from "react";
-//import avocado from "../assets/avocado.png";
-import { Chart } from "./components/Chart";
-//import Cool from "./components/Cool";
+import React, { useEffect } from "react";
+import { Chart } from "components/Chart";
+import avocado from "assets/avocado.png";
+import { ErrorBoundary } from "components/ErrorBoundary";
 
 const App = () => {
   return (
-    <div>
-      {/* <img src={avocado} /> */}
+    <ErrorBoundary>
+      <img src={avocado} />
       <p>App</p>
       <Chart />
-      {/* <Cool /> */}
-    </div>
+    </ErrorBoundary>
   );
 };
 

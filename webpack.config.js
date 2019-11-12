@@ -8,10 +8,9 @@ const HtmlWebPackPlugin = require("html-webpack-plugin");
 const postcssPresetEnv = require("postcss-preset-env");
 const autoprefixer = require("autoprefixer");
 const stylelint = require("stylelint");
+const ManifestPlugin = require("webpack-manifest-plugin");
 
 // TODO webpack polyfill fo css (postcss) for prod
-// TODO webpack manifest for prod
-// TODO https://github.com/NMFR/optimize-css-assets-webpack-plugin for prod
 
 module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
   return webpackMerge(
@@ -84,12 +83,12 @@ module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
           template: "src/template.html",
           minify: false,
           cache: false
-        })
+        }),
+        new ManifestPlugin()
       ],
       devServer: {
         publicPath: "/packs/",
         contentBase: path.join(__dirname, "public/packs"),
-        //hot: true,
         historyApiFallback: true,
         port: 3000,
         open: true,
@@ -100,8 +99,8 @@ module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
           chunks: true
         }
       }
-    }
-    //modeConfig(mode),
-    //presets ? presetConfig({ mode, presets }) : null
+    },
+    modeConfig(mode),
+    presets ? presetConfig({ mode, presets }) : null
   );
 };
