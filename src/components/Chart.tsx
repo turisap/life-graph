@@ -3,9 +3,7 @@ import "./styles.scss";
 
 const Chart = () => {
   useEffect(() => {
-    setTimeout(() => {
-      throw new Error("ololo");
-    }, 3000);
+    throw new ReferenceError("ololo");
   }, []);
 
   return (
