@@ -27,22 +27,6 @@ class ErrorBoundary extends React.Component<ErrorProps, ErrorState> {
     const { error, info } = this.state;
     const jsx = [];
 
-    for (let key in info) {
-      jsx.push(
-        <p>
-          {key}: {info[key]}
-        </p>
-      );
-    }
-
-    for (let key in error) {
-      jsx.push(
-        <p>
-          {key}: {info[key]}
-        </p>
-      );
-    }
-
     return jsx;
   }
 
