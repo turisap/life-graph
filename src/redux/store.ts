@@ -18,11 +18,8 @@ const rootEpic = combineEpics(generalEpic);
 
 const epicMiddleware = createEpicMiddleware();
 
-const store = createStore(
-  rootReducer,
-  composeEnhancers(applyMiddleware(epicMiddleware))
-);
+const store = createStore(rootReducer, applyMiddleware(epicMiddleware));
 
-epicMiddleware.run(rootEpic as any);
+epicMiddleware.run(generalEpic as any);
 
 export default store;

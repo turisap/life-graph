@@ -5,28 +5,21 @@ import actionCreatorFactory from "typescript-fsa";
 import { logginAsync } from "./redux/ducks/general";
 import { Chart } from "components/Chart";
 import avocado from "assets/avocado.png";
-import { ErrorBoundary } from "components/ErrorBoundary";
+import { CustomError } from "components/ErrorBoundary";
 
 const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(logginAsync());
-    // const actionCreator = actionCreatorFactory("OLOLO");
-
-    // // specify parameters and result shapes as generic type arguments
-    // const doSomething = actionCreator("DO_SOMETHING");
-
-    // console.log(doSomething());
-    // // {type: 'DO_SOMETHING_STARTED', payload: {foo: 'lol'}}
+    dispatch(logginAsync.started({ id: "1" }));
   });
 
   return (
-    <ErrorBoundary>
+    <CustomError>
       <img src={avocado} />
       <p>App</p>
       <Chart />
-    </ErrorBoundary>
+    </CustomError>
   );
 };
 

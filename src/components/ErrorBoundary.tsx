@@ -10,7 +10,7 @@ type ErrorProps = {
   [key: string]: any;
 };
 
-class ErrorBoundary extends React.Component<ErrorProps, ErrorState> {
+class CustomError extends React.Component<ErrorProps, ErrorState> {
   constructor(props: ErrorProps) {
     super(props);
     this.state = { hasError: false, error: {}, info: {} };
@@ -43,4 +43,4 @@ class ErrorBoundary extends React.Component<ErrorProps, ErrorState> {
   }
 }
 
-export { ErrorBoundary };
+export { CustomError };
