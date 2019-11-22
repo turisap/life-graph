@@ -1,7 +1,6 @@
 import { reducerWithInitialState } from "typescript-fsa-reducers";
 import { combineEpics } from "redux-observable";
 import actionCreatorFactory from "typescript-fsa";
-import { delay, map, tap, ignoreElements } from "rxjs/operators";
 import "typescript-fsa-redux-observable";
 
 import { GeneralReducerState } from "../types";
@@ -38,17 +37,5 @@ const loggingEpic$ = action$ =>
     });
   });
 
-const counterDecrementEpic = action$ =>
-  action$
-    .ofAction(logginAsync.started)
-    .delay(300)
-    .map(action =>
-      logginAsync.done({
-        params: (action as any).payload,
-        result: {
-          bar: "bar"
-        }
-      })
-    );
-const generalEpic = combineEpics(counterDecrementEpic);
+const generalEpic = combineEpics(loggingEpic$);
 export { general, generalEpic };
