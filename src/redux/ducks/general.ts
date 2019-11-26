@@ -3,13 +3,16 @@ import { combineEpics } from "redux-observable";
 import actionCreatorFactory from "typescript-fsa";
 import "typescript-fsa-redux-observable";
 
+import { ofType } from "redux-observable";
+import { ignoreElements, switchMap, map, filter } from "rxjs/operators";
+import { from } from "rxjs";
+
 import { GeneralReducerState } from "../types";
 
 const generalActionCreator = actionCreatorFactory("@General");
 
 export const toggleSignIn = generalActionCreator("toggleSignIn");
 
-// TODO make this one async
 export const logginAsync = generalActionCreator.async<{ id: string }, {}, {}>(
   "logginAsync"
 );
@@ -27,15 +30,29 @@ general.case(toggleSignIn, (state: GeneralReducerState, payload) => {
   };
 });
 
-const loggingEpic$ = action$ =>
-  action$.filter(logginAsync.started.match).switchMap(action => {
-    return logginAsync.done({
-      params: action.payload,
-      result: {
-        bar: "bar"
-      }
-    });
-  });
+general.case(logginAsync.done, state => ({
+  ...state,
+  signedin: !state.signedin
+}));
+
+const loggingEpic$ = action$ => {
+  return action$.pipe(
+    filter(logginAsync.started.match),
+    switchMap(data =>
+      from(
+        fetch("https://jsonplaceholder.typicode.com/todos/1", {
+          method: "GET",
+          mode: "cors",
+          headers: { "Content-Type": "application/json" }
+        }).then(response => {
+          if (response.ok) return response.json();
+          return ignoreElements();
+        })
+      )
+    ),
+    map(data => logginAsync.done(data as any))
+  );
+};
 
 const generalEpic = combineEpics(loggingEpic$);
 export { general, generalEpic };

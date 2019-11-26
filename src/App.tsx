@@ -11,13 +11,14 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(logginAsync.started({ id: "1" }));
+    dispatch(logginAsync.started({ id: "6" }));
   });
 
   return (
     <CustomError>
       <img src={avocado} />
-      <p>App</p>
+      <p>Apprrr</p>
+      <p>Apprrr</p>
       <Chart />
     </CustomError>
   );
