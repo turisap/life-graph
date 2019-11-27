@@ -1,0 +1,32 @@
+{
+  "extends": ["tslint:latest"],
+  "defaultSeverity": "warning",
+  "rules": {
+    "max-line-length": {
+      "options": [120]
+    },
+    "new-parens": true,
+    "no-arg": true,
+    "no-bitwise": true,
+    "no-conditional-assignment": true,
+    "no-consecutive-blank-lines": false,
+    "no-unused-variable": {
+      "severety": "error"
+    },
+    "nol-unused-expression": true,
+    "object-literal-sort-keys": false,
+    "no-submodule-imports": false,
+    "interface-name": false,
+    "arrow-parens": false,
+    "trailing-comma": false,
+    "no-implicit-dependencies": false,
+    "interface-over-type-literal": false,
+    "member-access": false,
+    "ordered-imports": false,
+    "no-console": {
+      "severity": "warning",
+      "options": ["debug", "info", "log", "time", "timeEnd", "trace"]
+    }
+  },
+  "jsRules": true
+}

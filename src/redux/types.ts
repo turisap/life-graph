@@ -1,3 +1,3 @@
-export type GeneralReducerState = {
+export interface GeneralReducerState {
   signedin: boolean;
-};
+}

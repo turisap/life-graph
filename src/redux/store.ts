@@ -1,8 +1,6 @@
-import { combineEpics } from "redux-observable";
-import { combineReducers } from "redux";
+import { applyMiddleware, createStore, combineReducers } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
-import { createStore, applyMiddleware } from "redux";
-import { createEpicMiddleware } from "redux-observable";
+import { combineEpics, createEpicMiddleware } from "redux-observable";
 
 import { general, generalEpic } from "./ducks/general";
 

@@ -1,11 +1,9 @@
-import { reducerWithInitialState } from "typescript-fsa-reducers";
-import { combineEpics } from "redux-observable";
+import { combineEpics, ofType } from "redux-observable";
 import actionCreatorFactory from "typescript-fsa";
+import { reducerWithInitialState } from "typescript-fsa-reducers";
 import "typescript-fsa-redux-observable";
-
-import { ofType } from "redux-observable";
-import { ignoreElements, switchMap, map, filter } from "rxjs/operators";
 import { from } from "rxjs";
+import { filter, ignoreElements, map, switchMap } from "rxjs/operators";
 
 import { GeneralReducerState } from "../types";
 
@@ -45,7 +43,9 @@ const loggingEpic$ = action$ => {
           mode: "cors",
           headers: { "Content-Type": "application/json" }
         }).then(response => {
-          if (response.ok) return response.json();
+          if (response.ok) {
+            return response.json();
+          }
           return ignoreElements();
         })
       )

@@ -6,6 +6,7 @@ import { logginAsync } from "./redux/ducks/general";
 import { Chart } from "components/Chart";
 import avocado from "assets/avocado.png";
 import { CustomError } from "components/ErrorBoundary";
+const a = 4;
 
 const App = () => {
   const dispatch = useDispatch();

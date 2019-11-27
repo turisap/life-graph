@@ -1,16 +1,12 @@
 const path = require("path");
 const webpack = require("webpack");
+const TSLintPlugin = require("tslint-webpack-plugin");
 const modeConfig = mode => require(`./build-utils/webpack.${mode}`)(mode);
 const webpackMerge = require("webpack-merge");
 const presetConfig = require("./build-utils/loadPresets");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
-const postcssPresetEnv = require("postcss-preset-env");
-const autoprefixer = require("autoprefixer");
-const stylelint = require("stylelint");
 const ManifestPlugin = require("webpack-manifest-plugin");
-
-// TODO webpack polyfill fo css (postcss) for prod
 
 module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
   return webpackMerge(
@@ -84,14 +80,20 @@ module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
           minify: false,
           cache: false
         }),
-        new ManifestPlugin()
+        new ManifestPlugin(),
+        new TSLintPlugin({
+          files: ["./src/**/*.ts", "./src/**/*.tsx"],
+          silent: false,
+          warningsAsError: false,
+          config: "./tslint.json"
+        })
       ],
       devServer: {
         publicPath: "/packs/",
         contentBase: path.join(__dirname, "public/packs"),
         historyApiFallback: true,
         port: 3000,
-        open: true,
+        //open: true,
         stats: {
           colors: true,
           hash: false,

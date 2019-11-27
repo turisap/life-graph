@@ -11,6 +11,7 @@ type ErrorProps = {
 };
 
 class CustomError extends React.Component<ErrorProps, ErrorState> {
+  /* tslint:disable */
   constructor(props: ErrorProps) {
     super(props);
     this.state = { hasError: false, error: {}, info: {} };
@@ -41,6 +42,7 @@ class CustomError extends React.Component<ErrorProps, ErrorState> {
     }
     return this.props.children;
   }
+  /* tslint:enable */
 }
 
 export { CustomError };

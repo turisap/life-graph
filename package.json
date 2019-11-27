@@ -13,7 +13,9 @@
     "prod:debug": "npm run debug -- --env.mode production",
     "prod:analyze": "npm run prod -- --env.presets analyze",
     "prod:compress": "npm run prod -- --env.presets compress",
-    "dev:debug": "npm run debug -- --env.mode development"
+    "dev:debug": "npm run debug -- --env.mode development",
+    "tslint": "tslint tslint.json 'src/**/*.{ts,tsx}'",
+    "tslint:fix": "tslint --fix tslint.json 'src/**/*.{ts,tsx}'"
   },
   "browserslist": [
     "defaults"
@@ -61,6 +63,7 @@
     "postcss-loader": "^3.0.0",
     "postcss-preset-env": "^6.7.0",
     "proptypes": "^1.1.0",
+    "react": "^16.12.0",
     "recompose": "^0.20.0",
     "resolve-url-loader": "^3.1.1",
     "sass-loader": "^8.0.0",
@@ -68,6 +71,8 @@
     "stylelint": "^11.1.1",
     "sugarss": "^2.0.0",
     "ts-loader": "^6.2.1",
+    "tslint": "^5.20.1",
+    "tslint-webpack-plugin": "^2.1.0",
     "typescript": "^3.7.2",
     "url-loader": "^2.2.0",
     "webpack": "^4.41.2",
@@ -85,7 +90,6 @@
     "nprogress": "^0.2.0",
     "polished": "^3.4.1",
     "postcss-load-config": "^2.1.0",
-    "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-redux": "^7.1.3",
     "redux": "^4.0.4",
