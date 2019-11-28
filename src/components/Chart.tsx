@@ -5,6 +5,12 @@ const Chart = () => {
   return (
     <div className="chart">
       <p>l</p>
+      <p>l</p>
+      <p>l</p>
+      <p>l</p>
+      <p>l</p>
+      <p>l</p>
+      <p>l</p>
     </div>
   );
 };
