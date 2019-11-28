@@ -93,7 +93,7 @@ module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
         contentBase: path.join(__dirname, "public/packs"),
         historyApiFallback: true,
         port: 3000,
-        //open: true,
+        open: true,
         stats: {
           colors: true,
           hash: false,
