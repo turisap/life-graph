@@ -1,6 +1,6 @@
 {
-  "extends": ["tslint:latest"],
-  "defaultSeverity": "warning",
+  "extends": ["tslint:latest", "tslint-react"],
+  "defaultSeverity": "error",
   "rules": {
     "max-line-length": {
       "options": [120]
@@ -9,11 +9,9 @@
     "no-arg": true,
     "no-bitwise": true,
     "no-conditional-assignment": true,
-    "no-consecutive-blank-lines": false,
-    "no-unused-variable": {
-      "severety": "error"
-    },
-    "nol-unused-expression": true,
+    "no-consecutive-blank-lines": true,
+    "no-unused-variable": [true, { "ignore-pattern": "^_" }],
+    "no-unused-expression": true,
     "object-literal-sort-keys": false,
     "no-submodule-imports": false,
     "interface-name": false,
@@ -26,7 +24,12 @@
     "no-console": {
       "severity": "warning",
       "options": ["debug", "info", "log", "time", "timeEnd", "trace"]
-    }
-  },
-  "jsRules": true
+    },
+    "jsx-wrap-multiline": false,
+    "jsx-key": true,
+    "jsx-equals-spacing": true,
+    "jsx-no-lambda": true,
+    "jsx-no-multiline-js": true,
+    "jsx-self-close": true
+  }
 }

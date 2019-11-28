@@ -97,7 +97,6 @@
     "redux-observable": "^1.2.0",
     "rxjs": "^6.5.3",
     "rxjs-compat": "^6.5.3",
-    "save-dev": "0.0.1-security",
     "styled-components": "^4.4.0",
     "typescript-fsa": "^3.0.0",
     "typescript-fsa-reducers": "^1.2.1",

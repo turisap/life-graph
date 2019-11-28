@@ -80,13 +80,13 @@ module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
           minify: false,
           cache: false
         }),
-        new ManifestPlugin(),
-        new TSLintPlugin({
-          files: ["./src/**/*.ts", "./src/**/*.tsx"],
-          silent: false,
-          warningsAsError: false,
-          config: "./tslint.json"
-        })
+        new ManifestPlugin()
+        // new TSLintPlugin({
+        //   files: ["./src/**/*.ts", "./src/**/*.tsx"],
+        //   silent: false,
+        //   warningsAsError: true,
+        //   config: "./tslint.json"
+        // })
       ],
       devServer: {
         publicPath: "/packs/",
