@@ -80,7 +80,7 @@ module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
           minify: false,
           cache: false
         }),
-        new ManifestPlugin()
+        new ManifestPlugin(),
         new TSLintPlugin({
           files: ["./src/**/*.ts", "./src/**/*.tsx"],
           silent: false,

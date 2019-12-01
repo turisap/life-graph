@@ -87,6 +87,7 @@
     "faker": "^4.1.0",
     "image-webpack-loader": "^6.0.0",
     "lodash": "^4.17.15",
+    "normalize.css": "^8.0.1",
     "nprogress": "^0.2.0",
     "polished": "^3.4.1",
     "postcss-load-config": "^2.1.0",
