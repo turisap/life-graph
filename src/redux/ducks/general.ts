@@ -1,4 +1,4 @@
-import { combineEpics, ofType } from "redux-observable";
+import { combineEpics } from "redux-observable";
 import actionCreatorFactory from "typescript-fsa";
 import { reducerWithInitialState } from "typescript-fsa-reducers";
 import "typescript-fsa-redux-observable";
@@ -21,7 +21,7 @@ const DEFAULT_STATE: GeneralReducerState = {
 
 const general = reducerWithInitialState(DEFAULT_STATE);
 
-general.case(toggleSignIn, (state: GeneralReducerState, payload) => {
+general.case(toggleSignIn, (state: GeneralReducerState) => {
   return {
     ...state,
     signedin: !state.signedin
@@ -36,7 +36,7 @@ general.case(logginAsync.done, state => ({
 const loggingEpic$ = action$ => {
   return action$.pipe(
     filter(logginAsync.started.match),
-    switchMap(data =>
+    switchMap(() =>
       from(
         fetch("https://jsonplaceholder.typicode.com/todos/1", {
           method: "GET",
