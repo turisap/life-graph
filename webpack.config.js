@@ -1,6 +1,5 @@
 const path = require("path");
 const webpack = require("webpack");
-const TSLintPlugin = require("tslint-webpack-plugin");
 const modeConfig = mode => require(`./build-utils/webpack.${mode}`)(mode);
 const webpackMerge = require("webpack-merge");
 const presetConfig = require("./build-utils/loadPresets");
@@ -28,13 +27,19 @@ module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
       module: {
         rules: [
           {
+            test: /\.(ts|tsx)$/,
             enforce: "pre",
-            loader: "eslint-loader",
-            test: /\.js$/,
-            exclude: /node_modules/,
-            options: {
-              emitWarning: true
-            }
+            use: [
+              {
+                options: {
+                  eslintPath: require.resolve("eslint"),
+                  fix: true,
+                  emitError: false
+                },
+                loader: require.resolve("eslint-loader")
+              }
+            ],
+            exclude: /node_modules/
           },
           {
             test: /\.(tsx|ts)?$/,
@@ -80,13 +85,7 @@ module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
           minify: false,
           cache: false
         }),
-        new ManifestPlugin(),
-        new TSLintPlugin({
-          files: ["./src/**/*.ts", "./src/**/*.tsx"],
-          silent: false,
-          warningsAsError: true,
-          config: "./tslint.json"
-        })
+        new ManifestPlugin()
       ],
       devServer: {
         publicPath: "/packs/",
