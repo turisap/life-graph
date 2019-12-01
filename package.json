@@ -3,6 +3,17 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.tsx",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "app/**/*.(ts|tsx)": [
+      "npm run --silent lint:r:fix",
+      "git add"
+    ]
+  },
   "scripts": {
     "server": "webpack-dev-server",
     "webpack": "webpack",
@@ -14,8 +25,8 @@
     "prod:analyze": "npm run prod -- --env.presets analyze",
     "prod:compress": "npm run prod -- --env.presets compress",
     "dev:debug": "npm run debug -- --env.mode development",
-    "tslint": "tslint tslint.json 'src/**/*.{ts,tsx}'",
-    "tslint:fix": "tslint --fix tslint.json 'src/**/*.{ts,tsx}'"
+    "lint:r": "eslint --ext .ts,.tsx",
+    "lint:r:fix": "npm run lint:r -- --fix"
   },
   "browserslist": [
     "defaults"
@@ -39,6 +50,8 @@
     "@storybook/react": "^5.2.6",
     "@types/react": "^16.9.11",
     "@types/react-dom": "^16.9.4",
+    "@typescript-eslint/eslint-plugin": "^2.9.0",
+    "@typescript-eslint/parser": "^2.9.0",
     "autoprefixer": "^9.7.1",
     "babel-eslint": "^10.0.3",
     "babel-loader": "^8.0.6",
@@ -48,14 +61,16 @@
     "compression-webpack-plugin": "^3.0.0",
     "css-loader": "^3.2.0",
     "cssnano": "^4.1.10",
-    "eslint": "^6.4.0",
+    "eslint": "^6.7.2",
     "eslint-loader": "^3.0.2",
     "eslint-plugin-only-warn": "^1.0.1",
-    "eslint-plugin-react": "^7.14.3",
+    "eslint-plugin-react": "^7.17.0",
     "eslint-watch": "^6.0.1",
     "file-loader": "^4.3.0",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
+    "husky": "^3.1.0",
+    "lint-staged": "^9.5.0",
     "mini-css-extract-plugin": "^0.8.0",
     "node-sass": "^4.13.0",
     "postcss-cssnext": "^3.1.0",
@@ -87,6 +102,7 @@
     "faker": "^4.1.0",
     "image-webpack-loader": "^6.0.0",
     "lodash": "^4.17.15",
+    "normalize.css": "^8.0.1",
     "nprogress": "^0.2.0",
     "polished": "^3.4.1",
     "postcss-load-config": "^2.1.0",
