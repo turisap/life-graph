@@ -21,7 +21,8 @@ module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
         extensions: [".js", ".jsx", ".ts", ".tsx"],
         alias: {
           components: path.resolve(__dirname, "src/components/"),
-          assets: path.resolve(__dirname, "assets/")
+          assets: path.resolve(__dirname, "assets/"),
+          lib: path.resolve(__dirname, "src/lib/")
         }
       },
       module: {

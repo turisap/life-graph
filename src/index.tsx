@@ -9,9 +9,7 @@ import App from "./App";
 
 ReactDOM.render(
   <Provider store={store}>
-    <div>
-      <App />
-    </div>
+    <App />
   </Provider>,
   document.getElementById("app")
 );

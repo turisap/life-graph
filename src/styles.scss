@@ -1,0 +1,21 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&display=swap");
+
+html,
+body {
+  height: 100%;
+  font-family: "Open Sans", sans-serif;
+}
+
+p {
+  margin: 0px;
+  padding: 0px;
+}
+
+#app {
+  height: 100%;
+  display: grid;
+  grid-template-rows: 1fr 20fr 1fr;
+  grid-template-columns: 1fr;
+  justify-items: stretch;
+  align-items: stretch;
+}
