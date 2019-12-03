@@ -6,8 +6,10 @@ import NavBar from "components/NavBar";
 import { CustomError } from "components/ErrorBoundary";
 import NotFound from "components/404";
 import Footer from "components/Footer";
+import RouteWrapper from "components/RouteWrapper";
+import Home from "components/Home";
+import AddEvent from "components/AddEvent";
 
-import { withPage } from "lib/withPage";
 import { logginAsync } from "./redux/ducks/general";
 
 import "./styles.scss";
@@ -24,7 +26,9 @@ const App = () => {
       <NavBar />
       <Router>
         <Switch>
-          <Route path="/" component={NotFound} />
+          <RouteWrapper component={Home} path="/" exact />
+          <RouteWrapper isPrivate component={AddEvent} path="/add-event" />
+          <Route path="*" component={NotFound} />
         </Switch>
       </Router>
       <Footer />
