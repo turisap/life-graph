@@ -29,7 +29,7 @@ const Styled404 = styled.div`
 
 const NotFound = () => (
   <Styled404>
-    <div className="panel">
+    <div className="panel site-panel">
       <p>
         Page you are looking for does not exist [ <span>yet</span> ]
       </p>

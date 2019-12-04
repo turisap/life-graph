@@ -4,6 +4,7 @@ html,
 body {
   height: 100%;
   font-family: "Open Sans", sans-serif;
+  background-color: #f0fcfc;
 }
 
 p {
@@ -18,4 +19,8 @@ p {
   grid-template-columns: 1fr;
   justify-items: stretch;
   align-items: stretch;
+}
+
+.site-panel {
+  background-color: #ffffff;
 }
