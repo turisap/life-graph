@@ -9,11 +9,11 @@ const Styled404 = styled.div`
   justify-content: center;
   color: #454545;
   font-size: 18px;
-  margin-top:20px
+  margin-top:20px;
 
   .panel {
     width: 750px;
-    height 500px;
+    height: 500px;
     border: 1px solid rgb(209, 213, 218);
     border-radius: 5px;
     font-weight: 600;

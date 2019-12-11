@@ -98,6 +98,7 @@
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
+    "bit-bin": "^14.6.0",
     "debug": "^4.1.1",
     "faker": "^4.1.0",
     "image-webpack-loader": "^6.0.0",
@@ -120,5 +121,10 @@
     "typescript-fsa-redux-observable": "^0.18.0",
     "uuid": "^3.3.3",
     "webpack-image-loader": "^0.0.7"
+  },
+  "bit": {
+    "env": {},
+    "componentsDefaultDirectory": "components/{name}",
+    "packageManager": "npm"
   }
 }

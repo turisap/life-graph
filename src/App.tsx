@@ -9,6 +9,7 @@ import Footer from "components/Footer";
 import RouteWrapper from "components/RouteWrapper";
 import Home from "components/Home";
 import AddEvent from "components/AddEvent";
+import Signin from "components/Signin";
 
 import { logginAsync } from "./redux/ducks/general";
 
@@ -27,6 +28,7 @@ const App = () => {
       <Router>
         <Switch>
           <RouteWrapper component={Home} path="/" exact />
+          <RouteWrapper component={Signin} path="/signin" exact />
           <RouteWrapper isPrivate component={AddEvent} path="/add-event" />
           <Route path="*" component={NotFound} />
         </Switch>
