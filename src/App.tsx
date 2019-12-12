@@ -2,18 +2,16 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import NavBar from "components/NavBar";
-import { CustomError } from "components/ErrorBoundary";
-import NotFound from "components/404";
-import Footer from "components/Footer";
-import RouteWrapper from "components/RouteWrapper";
+import NavBar from "components/base/NavBar";
+import { CustomError } from "components/base/ErrorBoundary";
+import NotFound from "components/base/404";
+import Footer from "components/base/Footer";
+import RouteWrapper from "components/base/RouteWrapper";
 import Home from "components/Home";
 import AddEvent from "components/AddEvent";
 import Signin from "components/Signin";
 
 import { logginAsync } from "./redux/ducks/general";
-
-import "./styles.scss";
 
 const App = () => {
   const dispatch = useDispatch();
