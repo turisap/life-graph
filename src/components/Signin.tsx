@@ -2,7 +2,10 @@ import React from "react";
 import styled from "styled-components";
 
 import useForm from "components/base/useForm";
+import ErrorField from "components/base/ErrorField";
 import { signinValidationRules as validationRules } from "components/base/validationRules.ts";
+
+// TODO ts loader throw error on compile error
 
 const BackgrounPattern = styled.div`
   display: flex;
@@ -77,7 +80,9 @@ const Signin = () => {
             everything is in a nice small bottle
           </p>
         </StyledHeading>
-        <StyledForm></StyledForm>
+        <StyledForm>
+          <ErrorField />
+        </StyledForm>
       </PageContainer>
     </BackgrounPattern>
   );
