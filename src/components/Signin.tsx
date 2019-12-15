@@ -1,11 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 
-import useForm from "components/base/useForm";
 import ErrorField from "components/base/ErrorField";
+import useForm from "components/base/useForm";
 import { signinValidationRules as validationRules } from "components/base/validationRules.ts";
-
-// TODO ts loader throw error on compile error
 
 const BackgrounPattern = styled.div`
   display: flex;
@@ -70,7 +68,7 @@ const Signin = () => {
     <BackgrounPattern className="signin__background">
       <PageContainer>
         <StyledHeading>
-          <h1>Built for myself</h1>
+          <h1>Built for fun</h1>
           <p>
             This is my life journal in a chart form / calendar / a mean to track
             my life path / a nice thing which accumulates everything has
@@ -81,7 +79,22 @@ const Signin = () => {
           </p>
         </StyledHeading>
         <StyledForm>
-          <ErrorField />
+          <ErrorField
+            name="email"
+            title="Your email"
+            placeholder="Your email"
+            errors={errors}
+            values={values}
+            type="email"
+          />
+          <ErrorField
+            name="password"
+            title="Your password"
+            placeholder="**************"
+            errors={errors}
+            values={values}
+            type="password"
+          />
         </StyledForm>
       </PageContainer>
     </BackgrounPattern>

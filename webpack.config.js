@@ -35,7 +35,8 @@ module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
                 options: {
                   eslintPath: require.resolve("eslint"),
                   fix: true,
-                  emitError: false
+                  emitError: false,
+                  logLevel: "error"
                 },
                 loader: require.resolve("eslint-loader")
               }

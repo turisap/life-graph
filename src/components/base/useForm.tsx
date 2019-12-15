@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Error } from "./ErrorField";
 
 type UseFormProps = {
   submitCallback: (values: any) => void;
@@ -12,7 +13,7 @@ const useForm = ({
   defaults
 }: UseFormProps) => {
   const [values, setValues] = useState<any>({ ...defaults });
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<Error>({});
   const [dirty, setDirty] = useState<boolean>(false);
 
   useEffect(() => {

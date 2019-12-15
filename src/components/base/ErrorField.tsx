@@ -6,11 +6,12 @@ type ErrorFieldProps = {
   name: string;
   title: string;
   placeholder: string;
-  errors: Array<Error>;
-  values: Array<Value>;
+  errors: Error;
+  values: Value;
+  type?: string;
 };
 
-type Error = {
+export type Error = {
   [key: string]: string;
 };
 
@@ -29,17 +30,18 @@ const ErrorField: React.FC<ErrorFieldProps> = ({
   title,
   placeholder,
   errors,
-  values
+  values,
+  type
 }) => (
   <StyledErrorField>
     <p className={cn("error-field__title", { _error: errors[name] })}>
       {!!errors[name] && title}
     </p>
     <input
-      type="text"
       placeholder={placeholder}
       name={name}
       value={values[name]}
+      type={type ? type : "text"}
     />
     <p>{!!errors[name] && errors[name]}</p>
   </StyledErrorField>
