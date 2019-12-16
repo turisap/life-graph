@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import ErrorField from "components/base/ErrorField";
 import useForm from "components/base/useForm";
+import Button from "components/base/Button";
 import { signinValidationRules as validationRules } from "components/base/validationRules.ts";
 
 const BackgrounPattern = styled.div`
@@ -94,6 +95,13 @@ const Signin = () => {
             errors={errors}
             values={values}
             type="password"
+          />
+          <Button
+            text="Signin"
+            loading={false}
+            background="#2ebc4f"
+            color="#fff"
+            height={6}
           />
         </StyledForm>
       </PageContainer>

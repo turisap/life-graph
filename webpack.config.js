@@ -36,7 +36,7 @@ module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
                   eslintPath: require.resolve("eslint"),
                   fix: true,
                   emitError: false,
-                  logLevel: "error"
+                  logLevel: "warning"
                 },
                 loader: require.resolve("eslint-loader")
               }
@@ -94,7 +94,7 @@ module.exports = ({ mode, presets } = { mode: "production", presets: [] }) => {
         contentBase: path.join(__dirname, "public/packs"),
         historyApiFallback: true,
         port: 3000,
-        open: true,
+        open: false,
         stats: {
           colors: true,
           hash: false,

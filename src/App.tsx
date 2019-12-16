@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { ThemeProvider } from "styled-components";
 
 import NavBar from "components/base/NavBar";
 import { CustomError } from "components/base/ErrorBoundary";
@@ -12,6 +13,7 @@ import AddEvent from "components/AddEvent";
 import Signin from "components/Signin";
 
 import { logginAsync } from "./redux/ducks/general";
+import { theme } from "./theme";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -23,14 +25,16 @@ const App = () => {
   return (
     <CustomError>
       <NavBar />
-      <Router>
-        <Switch>
-          <RouteWrapper component={Home} path="/" exact />
-          <RouteWrapper component={Signin} path="/signin" exact />
-          <RouteWrapper isPrivate component={AddEvent} path="/add-event" />
-          <Route path="*" component={NotFound} />
-        </Switch>
-      </Router>
+      <ThemeProvider theme={theme}>
+        <Router>
+          <Switch>
+            <RouteWrapper component={Home} path="/" exact />
+            <RouteWrapper component={Signin} path="/signin" exact />
+            <RouteWrapper isPrivate component={AddEvent} path="/add-event" />
+            <Route path="*" component={NotFound} />
+          </Switch>
+        </Router>
+      </ThemeProvider>
       <Footer />
     </CustomError>
   );
