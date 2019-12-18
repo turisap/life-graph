@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Spinner from "react-spinner-material";
+import { darken } from "polished";
 
 type ButtonProps = {
   height?: number;
@@ -24,6 +25,15 @@ const StyledButton = styled.button<ButtonProps>`
   justify-content: center;
   font-weight: 400;
   font-size: 2rem;
+
+  &:hover {
+    background: ${props =>
+      props.background
+        ? darken(0.1, props.background)
+        : darken(0.1, "#ffffff")};
+    cursor: pointer;
+    transition: background 0.5s ease;
+  }
 `;
 
 const Button: React.FC<ButtonProps> = props => {

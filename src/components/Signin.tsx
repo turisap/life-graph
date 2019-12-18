@@ -45,7 +45,7 @@ const StyledHeading = styled.div`
 
 const StyledForm = styled.form`
   width: 42rem;
-  height: 50rem;
+  height: 35rem;
   padding: 2rem;
   border-radius: 0.8rem;
   background: #ffffff;
@@ -53,7 +53,7 @@ const StyledForm = styled.form`
   grid-column: 2 / 3;
   justify-self: start;
   display: grid;
-  grid-template-rows: 12rem 12rem 15rem;
+  grid-template-rows: 12rem 12rem 8rem;
   grid-template-columns: 1fr;
   align-items: center;
 `;
@@ -79,7 +79,7 @@ const Signin = () => {
             everything is in a nice small bottle
           </p>
         </StyledHeading>
-        <StyledForm>
+        <StyledForm onSubmit={handleSubmit}>
           <ErrorField
             name="email"
             title="Your email"
@@ -87,6 +87,7 @@ const Signin = () => {
             errors={errors}
             values={values}
             type="email"
+            onChange={handleChange}
           />
           <ErrorField
             name="password"
@@ -95,6 +96,7 @@ const Signin = () => {
             errors={errors}
             values={values}
             type="password"
+            onChange={handleChange}
           />
           <Button
             text="Signin"

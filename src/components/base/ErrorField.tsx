@@ -9,6 +9,7 @@ type ErrorFieldProps = {
   errors: Error;
   values: Value;
   type?: string;
+  onChange: (e: any) => void;
 };
 
 export type Error = {
@@ -21,8 +22,33 @@ type Value = {
 
 const StyledErrorField = styled.div`
   display: grid;
-  grid-template-rows: 1.8rem 4rem 1.3rem;
+  grid-template-rows: 2.8rem 4rem 1.3rem;
   grid-template-columns: 1fr;
+
+  .error-field__title {
+    margin-bottom: 1rem;
+    font-weight: 600;
+  }
+
+  ._error {
+    color: ${props => props.theme.textError};
+  }
+
+  input {
+    border-radius: 4px;
+    border: 1px solid rgb(209, 213, 218);
+    padding-left: 8px;
+
+    &:focus {
+      outline: none;
+    }
+  }
+`;
+
+const Error = styled.p`
+  color: ${props => props.theme.textError};
+  font-size: 1.4rem;
+  margin-top: 3px;
 `;
 
 const ErrorField: React.FC<ErrorFieldProps> = ({
@@ -31,19 +57,22 @@ const ErrorField: React.FC<ErrorFieldProps> = ({
   placeholder,
   errors,
   values,
-  type
+  type,
+  onChange
 }) => (
   <StyledErrorField>
     <p className={cn("error-field__title", { _error: errors[name] })}>
-      {!!errors[name] && title}
+      {title}
     </p>
     <input
       placeholder={placeholder}
       name={name}
       value={values[name]}
       type={type ? type : "text"}
+      onChange={onChange}
+      form="novalidatedform"
     />
-    <p>{!!errors[name] && errors[name]}</p>
+    <Error>{errors[name]}</Error>
   </StyledErrorField>
 );
 
