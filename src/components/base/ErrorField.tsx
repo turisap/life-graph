@@ -67,7 +67,7 @@ const ErrorField: React.FC<ErrorFieldProps> = ({
     <input
       placeholder={placeholder}
       name={name}
-      value={values[name]}
+      value={values[name] || ""}
       type={type ? type : "text"}
       onChange={onChange}
       form="novalidatedform"

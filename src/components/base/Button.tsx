@@ -9,7 +9,8 @@ type ButtonProps = {
   color?: string;
   background: string;
   text: string;
-  loading: boolean;
+  loadingState: boolean;
+  onClick: (values: any) => void;
 };
 
 const StyledButton = styled.button<ButtonProps>`
@@ -39,7 +40,7 @@ const StyledButton = styled.button<ButtonProps>`
 const Button: React.FC<ButtonProps> = props => {
   return (
     <StyledButton {...props}>
-      {props.loading ? (
+      {props.loadingState ? (
         <Spinner
           size={props.height ? props.height * 6 : 40}
           spinnerColor={props.color ? props.color : "#333"}

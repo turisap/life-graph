@@ -2,55 +2,75 @@ import { combineEpics } from "redux-observable";
 import actionCreatorFactory from "typescript-fsa";
 import { reducerWithInitialState } from "typescript-fsa-reducers";
 import "typescript-fsa-redux-observable";
-import { from } from "rxjs";
-import { filter, ignoreElements, map, switchMap } from "rxjs/operators";
+import { from, of } from "rxjs";
+import { filter, switchMap, map, catchError } from "rxjs/operators";
 
-import { GeneralReducerState } from "../types";
+import { GeneralReducerState, SignInFireBaseResponseShape } from "../types";
+import { myFirebase } from "../../../firebase/firebase";
 
 const generalActionCreator = actionCreatorFactory("@General");
 
-export const toggleSignIn = generalActionCreator("toggleSignIn");
-
-export const logginAsync = generalActionCreator.async<{ id: string }, {}, {}>(
-  "logginAsync"
-);
+export const logginAsync = generalActionCreator.async<
+  { email: string; password: string },
+  { payload: SignInFireBaseResponseShape },
+  { error: any }
+>("logginAsync");
 
 const DEFAULT_STATE: GeneralReducerState = {
-  signedin: false
+  signedin: false,
+  signInLoading: false,
+  user: {
+    refreshToken: null,
+    accessToken: null
+  },
+  authError: ""
 };
 
 const general = reducerWithInitialState(DEFAULT_STATE);
 
-general.case(toggleSignIn, (state: GeneralReducerState) => {
+general.case(logginAsync.started, state => ({
+  ...state,
+  signInLoading: true
+}));
+
+general.case(logginAsync.done, (state, user: any) => {
   return {
     ...state,
-    signedin: !state.signedin
+    signInLoading: false,
+    signedin: true,
+    user: {
+      refreshToken: user.userrefreshToken,
+      accessToken: user.user.ma
+    },
+    authError: ""
   };
 });
-
-general.case(logginAsync.done, state => ({
+general.case(logginAsync.failed, state => ({
   ...state,
-  signedin: !state.signedin
+  signInLoading: false,
+  authError: "*** there has been an error logging you in"
 }));
 
 const loggingEpic$ = action$ => {
   return action$.pipe(
     filter(logginAsync.started.match),
-    switchMap(() =>
-      from(
-        fetch("https://jsonplaceholder.typicode.com/todos/1", {
-          method: "GET",
-          mode: "cors",
-          headers: { "Content-Type": "application/json" }
-        }).then(response => {
-          if (response.ok) {
-            return response.json();
-          }
-          return ignoreElements();
+    switchMap(({ payload: { email, password } }: any) => {
+      return from(
+        myFirebase
+          .auth()
+          .signInWithEmailAndPassword(email, password)
+          .then(logginAsync.done)
+          .catch(logginAsync.failed)
+      );
+    }),
+    catchError(error =>
+      of(
+        logginAsync.failed({
+          error,
+          params: {} as any
         })
       )
-    ),
-    map(data => logginAsync.done(data as any))
+    )
   );
 };
 

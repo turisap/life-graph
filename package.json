@@ -102,6 +102,7 @@
     "class-names": "^1.0.0",
     "debug": "^4.1.1",
     "faker": "^4.1.0",
+    "firebase": "^7.6.1",
     "image-webpack-loader": "^6.0.0",
     "lodash": "^4.17.15",
     "normalize.css": "^8.0.1",

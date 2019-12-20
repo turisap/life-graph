@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import ErrorField from "components/base/ErrorField";
 import useForm from "components/base/useForm";
 import Button from "components/base/Button";
 import { signinValidationRules as validationRules } from "components/base/validationRules.ts";
+
+import { logginAsync } from "../redux/ducks/general";
+import { RootState } from "../redux/types";
 
 const BackgrounPattern = styled.div`
   display: flex;
@@ -45,7 +50,7 @@ const StyledHeading = styled.div`
 
 const StyledForm = styled.form`
   width: 42rem;
-  height: 35rem;
+  height: auto;
   padding: 2rem;
   border-radius: 0.8rem;
   background: #ffffff;
@@ -53,13 +58,44 @@ const StyledForm = styled.form`
   grid-column: 2 / 3;
   justify-self: start;
   display: grid;
-  grid-template-rows: 12rem 12rem 8rem;
+  grid-template-rows: 12rem 12rem 1.5rem 8rem 5rem;
   grid-template-columns: 1fr;
   align-items: center;
 `;
 
+const StyledTinyInfo = styled.p`
+  font-size: 12px;
+  color: #6a737d;
+  align-self: end;
+`;
+
+const FormError = styled.p`
+  color: #de1e14;
+  font-size: 14px;
+  font-weight: 300;
+`;
+
 const Signin = () => {
-  const submitCallback = () => {};
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const {
+    signInLoading,
+    authError,
+    signedin,
+    user: { accessToken }
+  } = useSelector((state: RootState) => state.general);
+
+  useEffect(() => {
+    if (signedin && accessToken) {
+      history.push("/");
+    }
+  }, [signedin, accessToken]);
+
+  const submitCallback = ({ email, password }) => {
+    dispatch(logginAsync.started({ email, password }));
+  };
+
   const { errors, values, handleSubmit, handleChange } = useForm({
     submitCallback,
     validationRules
@@ -98,13 +134,20 @@ const Signin = () => {
             type="password"
             onChange={handleChange}
           />
+          <FormError>{authError}</FormError>
           <Button
             text="Signin"
-            loading={false}
+            loadingState={signInLoading}
             background="#2ebc4f"
             color="#fff"
             height={6}
+            onClick={handleSubmit}
           />
+          <StyledTinyInfo>
+            Actually, you cannot sign in as I have made this app for personal
+            use only. You can either try to hack it or run on your local
+            machine.
+          </StyledTinyInfo>
         </StyledForm>
       </PageContainer>
     </BackgrounPattern>

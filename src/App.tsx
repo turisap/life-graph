@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 
@@ -12,16 +11,9 @@ import Home from "components/Home";
 import AddEvent from "components/AddEvent";
 import Signin from "components/Signin";
 
-import { logginAsync } from "./redux/ducks/general";
 import { theme } from "./theme";
 
 const App = () => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(logginAsync.started({ id: "6" }));
-  });
-
   return (
     <CustomError>
       <NavBar />
