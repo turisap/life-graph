@@ -3,7 +3,13 @@ import actionCreatorFactory from "typescript-fsa";
 import { reducerWithInitialState } from "typescript-fsa-reducers";
 import "typescript-fsa-redux-observable";
 import { from, of } from "rxjs";
-import { filter, switchMap, map, catchError } from "rxjs/operators";
+import {
+  filter,
+  switchMap,
+  exhaustMap,
+  catchError,
+  delay
+} from "rxjs/operators";
 
 import { GeneralReducerState, SignInFireBaseResponseShape } from "../types";
 import { myFirebase } from "../../../firebase/firebase";
@@ -15,9 +21,13 @@ export const logginAsync = generalActionCreator.async<
   { payload: SignInFireBaseResponseShape },
   { error: any }
 >("logginAsync");
+export const setLoginSuccessFlag = generalActionCreator<boolean>(
+  "setLoginSuccessFlag"
+);
 
 const DEFAULT_STATE: GeneralReducerState = {
   signedin: false,
+  loginSuccess: false,
   signInLoading: false,
   user: {
     refreshToken: null,
@@ -45,16 +55,22 @@ general.case(logginAsync.done, (state, user: any) => {
     authError: ""
   };
 });
+
 general.case(logginAsync.failed, state => ({
   ...state,
   signInLoading: false,
   authError: "*** there has been an error logging you in"
 }));
 
+general.case(setLoginSuccessFlag, state => ({
+  ...state,
+  loginSuccess: true
+}));
+
 const loggingEpic$ = action$ => {
   return action$.pipe(
     filter(logginAsync.started.match),
-    switchMap(({ payload: { email, password } }: any) => {
+    exhaustMap(({ payload: { email, password } }: any) => {
       return from(
         myFirebase
           .auth()
@@ -74,5 +90,12 @@ const loggingEpic$ = action$ => {
   );
 };
 
-const generalEpic = combineEpics(loggingEpic$);
+const logginSuccessFlagEpic$ = action$ =>
+  action$.pipe(
+    filter(logginAsync.done.match),
+    delay(2000),
+    switchMap(() => of(setLoginSuccessFlag(true)))
+  );
+
+const generalEpic = combineEpics(loggingEpic$, logginSuccessFlagEpic$);
 export { general, generalEpic };

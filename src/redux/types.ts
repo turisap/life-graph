@@ -16,6 +16,7 @@ export interface RootState {
 export interface GeneralReducerState {
   signedin: boolean;
   signInLoading: boolean;
+  loginSuccess: boolean;
   user: User;
   authError: string;
 }

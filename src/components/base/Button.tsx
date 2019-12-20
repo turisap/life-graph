@@ -8,7 +8,6 @@ type ButtonProps = {
   width?: number;
   color?: string;
   background: string;
-  text: string;
   loadingState: boolean;
   onClick: (values: any) => void;
 };
@@ -35,6 +34,10 @@ const StyledButton = styled.button<ButtonProps>`
     cursor: pointer;
     transition: background 0.5s ease;
   }
+
+  img {
+    height: ${props => props.height * 0.6 + "rem"};
+  }
 `;
 
 const Button: React.FC<ButtonProps> = props => {
@@ -48,7 +51,7 @@ const Button: React.FC<ButtonProps> = props => {
           visible={true}
         />
       ) : (
-        props.text
+        props.children
       )}
     </StyledButton>
   );

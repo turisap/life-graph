@@ -7,6 +7,7 @@ import ErrorField from "components/base/ErrorField";
 import useForm from "components/base/useForm";
 import Button from "components/base/Button";
 import { signinValidationRules as validationRules } from "components/base/validationRules.ts";
+import successIcon from "../../assets/checked.png";
 
 import { logginAsync } from "../redux/ducks/general";
 import { RootState } from "../redux/types";
@@ -82,15 +83,16 @@ const Signin = () => {
   const {
     signInLoading,
     authError,
+    loginSuccess,
     signedin,
     user: { accessToken }
   } = useSelector((state: RootState) => state.general);
 
   useEffect(() => {
-    if (signedin && accessToken) {
+    if (loginSuccess && accessToken) {
       history.push("/");
     }
-  }, [signedin, accessToken]);
+  }, [loginSuccess, accessToken]);
 
   const submitCallback = ({ email, password }) => {
     dispatch(logginAsync.started({ email, password }));
@@ -136,13 +138,14 @@ const Signin = () => {
           />
           <FormError>{authError}</FormError>
           <Button
-            text="Signin"
             loadingState={signInLoading}
             background="#2ebc4f"
             color="#fff"
             height={6}
             onClick={handleSubmit}
-          />
+          >
+            {signedin ? <img src={successIcon} /> : "Signin"}
+          </Button>
           <StyledTinyInfo>
             Actually, you cannot sign in as I have made this app for personal
             use only. You can either try to hack it or run on your local
