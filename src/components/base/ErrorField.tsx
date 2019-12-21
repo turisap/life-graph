@@ -43,12 +43,21 @@ const StyledErrorField = styled.div`
       outline: none;
     }
   }
+
+  @media (max-device-width: 500px) and (orientation: portrait) {
+    grid-template-rows: 6rem 9rem 1.3rem;
+    font-size: 4rem;
+  }
 `;
 
 const Error = styled.p`
   color: ${props => props.theme.textError};
   font-size: 1.4rem;
   margin-top: 3px;
+
+  @media (max-device-width: 500px) and (orientation: portrait) {
+    font-size: 3rem;
+  }
 `;
 
 const ErrorField: React.FC<ErrorFieldProps> = ({

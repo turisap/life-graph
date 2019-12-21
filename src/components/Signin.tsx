@@ -19,6 +19,7 @@ const BackgrounPattern = styled.div`
 
 const PageContainer = styled.div`
   background: linear-gradient(#18191a, #40454a);
+  padding: 20px;
   opacity: 0.95;
   flex: 1;
   display: grid;
@@ -26,11 +27,27 @@ const PageContainer = styled.div`
   grid-template-rows: 1fr;
   align-items: center;
   grid-gap: 5rem;
+
+  @media (max-width: 1025px) and (orientation: portrait) {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    grid-gap: 2rem;
+    justify-items: center;
+    align-items: start;
+  }
+
+  @media (max-width: 720px) {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    grid-gap: 2rem;
+    justify-items: center;
+    align-items: start;
+  }
 `;
 
 const StyledHeading = styled.div`
   justify-self: end;
-  width: 70rem;
+  max-width: 70rem;
 
   h1 {
     color: rgb(255, 255, 255);
@@ -47,33 +64,82 @@ const StyledHeading = styled.div`
     text-transform: uppercase;
     margin-top: 0.8rem;
   }
+
+  @media (max-width: 720px) {
+    text-align: center;
+    align-self: end;
+  }
+
+  @media (max-device-width: 500px) and (orientation: portrait) {
+    h1 {
+      font-size: 13rem;
+    }
+    p,
+    p.signin__textcaps {
+      font-size: 5rem;
+    }
+  }
+
+  @media (max-width: 1025px) and (orientation: portrait) {
+    text-align: center;
+    align-self: center;
+    justify-self: center;
+  }
 `;
 
 const StyledForm = styled.form`
-  width: 42rem;
+  max-width: 42rem;
   height: auto;
   padding: 2rem;
   border-radius: 0.8rem;
   background: #ffffff;
   opacity: 1;
-  grid-column: 2 / 3;
   justify-self: start;
   display: grid;
   grid-template-rows: 12rem 12rem 1.5rem 8rem 5rem;
   grid-template-columns: 1fr;
   align-items: center;
+
+  @media (max-width: 1025px) and (orientation: portrait) {
+    justify-self: stretch;
+    max-width: 100%;
+  }
+
+  @media (max-width: 900px) {
+    grid-template-rows: 8rem 8rem 1.5rem 8rem 5rem;
+  }
+
+  @media (max-width: 720px) {
+    justify-self: center;
+  }
+
+  @media (max-height: 590px) and (orientation: landscape) {
+    grid-template-rows: 8rem 8rem 1.5rem 8rem 5rem;
+  }
+
+  @media (max-device-width: 500px) and (orientation: portrait) {
+    grid-template-rows: 18rem 18rem 2.5rem 8rem 5rem;
+  }
 `;
 
 const StyledTinyInfo = styled.p`
-  font-size: 12px;
+  font-size: 1.2rem;
   color: #6a737d;
   align-self: end;
+
+  @media (max-device-width: 500px) and (orientation: portrait) {
+    font-size: 2.2rem;
+  }
 `;
 
 const FormError = styled.p`
   color: #de1e14;
-  font-size: 14px;
+  font-size: 1.4rem;
   font-weight: 300;
+
+  @media (max-device-width: 500px) and (orientation: portrait) {
+    font-size: 3rem;
+  }
 `;
 
 const Signin = () => {

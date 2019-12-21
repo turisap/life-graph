@@ -6,7 +6,8 @@
 
 html,
 body {
-  height: 100%;
+  height: 100vh;
+  box-sizing: border-box;
   font-family: "Open Sans", sans-serif;
   background-color: #f0fcfc;
 }

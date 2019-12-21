@@ -38,6 +38,10 @@ const StyledButton = styled.button<ButtonProps>`
   img {
     height: ${props => props.height * 0.6 + "rem"};
   }
+
+  @media (max-device-width: 500px) and (orientation: portrait) {
+    font-size: 3rem;
+  }
 `;
 
 const Button: React.FC<ButtonProps> = props => {
