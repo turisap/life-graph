@@ -1,4 +1,4 @@
-module.exports = ({ file, options, env }) => ({
+module.exports = ({ file, _, env }) => ({
   parser: file.extname === "scss" ? "sugarss" : false,
   plugins: {
     "postcss-import": {},

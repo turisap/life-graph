@@ -2,3 +2,4 @@
 *.code-workspace
 yarn-error.log
 public/**
+.bitmap
