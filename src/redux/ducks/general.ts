@@ -12,7 +12,7 @@ import {
 } from "rxjs/operators";
 
 import { GeneralReducerState, SignInFireBaseResponseShape } from "../types";
-import { myFirebase } from "../../../firebase/firebase";
+import { firestore } from "../../../firebase/firebase";
 
 const generalActionCreator = actionCreatorFactory("@General");
 
@@ -73,7 +73,7 @@ const loggingEpic$ = action$ => {
     filter(logginAsync.started.match),
     exhaustMap(({ payload: { email, password } }: any) => {
       return from(
-        myFirebase
+        firestore
           .auth()
           .signInWithEmailAndPassword(email, password)
           .then(logginAsync.done)
