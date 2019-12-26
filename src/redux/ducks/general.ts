@@ -44,6 +44,7 @@ general.case(logginAsync.started, state => ({
 }));
 
 general.case(logginAsync.done, (state, user: any) => {
+  localStorage.setItem("accessToken", user.user.ma);
   return {
     ...state,
     signInLoading: false,
