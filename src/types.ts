@@ -1,3 +1,7 @@
+import { Moment } from "moment";
+
+// redux related
+
 export type User = {
   refreshToken: string | null;
   accessToken: string | null;
@@ -20,3 +24,16 @@ export interface GeneralReducerState {
   user: User;
   authError: string;
 }
+
+// forms
+
+export type SignInFormErrors = {
+  email?: string;
+  password?: string;
+};
+
+export type CreateEventFromValues = {
+  title: string;
+  color: string;
+  date: Moment | string;
+};

@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Redirect } from "react-router-dom";
+import { Route, useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 type RouteWrapperProps = {
@@ -15,8 +15,10 @@ const RouteWrapper: React.FC<RouteWrapperProps> = ({
   ...rest
 }) => {
   const signedId = useSelector(state => state.general.signedin);
+  const history = useHistory();
+
   if (isPrivate && !signedId) {
-    return <Redirect path="/" />;
+    return history.push("/");
   }
 
   return <Route {...rest} render={props => <Component {...props} />} />;

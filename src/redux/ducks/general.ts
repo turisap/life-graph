@@ -11,7 +11,7 @@ import {
   delay
 } from "rxjs/operators";
 
-import { GeneralReducerState, SignInFireBaseResponseShape } from "../types";
+import { GeneralReducerState, SignInFireBaseResponseShape } from "../../types";
 import { firestore } from "../../../firebase/firebase";
 
 const generalActionCreator = actionCreatorFactory("@General");

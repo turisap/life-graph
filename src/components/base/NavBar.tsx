@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import { RootState } from "../../redux/types";
+import { RootState } from "../../types";
 
 const getToken = (state: RootState) => state.general.user.accessToken;
 
@@ -39,9 +39,6 @@ const StyledNav = styled.nav`
     flex-shrink: 100;
   }
 `;
-
-// TODO save token to the local storage and retrieve it using useStorageHook on page load (probably in App)
-// TODO passowrd and email remembering
 
 const NavBar = () => {
   const token = useSelector(getToken);

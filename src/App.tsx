@@ -16,7 +16,7 @@ import { theme } from "./theme";
 
 import { firestore } from "../firebase/firebase";
 import { logginAsync } from "./redux/ducks/general";
-import { RootState } from "./redux/types";
+import { RootState, User } from "./types";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -25,7 +25,7 @@ const App = () => {
   );
 
   const runAuth = (): void => {
-    firestore.auth().onAuthStateChanged(user => {
+    firestore.auth().onAuthStateChanged((user: User) => {
       if (user) {
         const payload = { user };
         dispatch(logginAsync.done(payload as any));
@@ -47,7 +47,7 @@ const App = () => {
           <Switch>
             <RouteWrapper component={Home} path="/" exact />
             <RouteWrapper component={Signin} path="/signin" exact />
-            <RouteWrapper isPrivate component={AddEvent} path="/add-event" />
+            <RouteWrapper component={AddEvent} path="/add-event" />
             <Route path="*" component={NotFound} />
           </Switch>
         </ThemeProvider>

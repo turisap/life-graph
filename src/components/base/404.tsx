@@ -2,14 +2,8 @@ import React from "react";
 import styled from "styled-components";
 
 const Styled404 = styled.div`
-  width: 100%;
-  height 100%;
-  display: flex;
-  align-items:start;
-  justify-content: center;
   color: #454545;
   font-size: 18px;
-  margin-top:20px;
 
   .panel {
     width: 750px;
@@ -18,21 +12,23 @@ const Styled404 = styled.div`
     border-radius: 5px;
     font-weight: 600;
     display: flex;
-    justify-content:center;
+    justify-content: center;
     align-items: center;
 
     span {
-      font-style:italic;
+      font-style: italic;
     }
   }
 `;
 
 const NotFound = () => (
-  <Styled404>
-    <div className="panel site-panel">
-      <p>
-        Page you are looking for does not exist [ <span>yet</span> ]
-      </p>
+  <Styled404 className="ornament__background">
+    <div className="overlay">
+      <div className="panel site-panel">
+        <p>
+          Page you are looking for does not exist [ <span>yet</span> ]
+        </p>
+      </div>
     </div>
   </Styled404>
 );

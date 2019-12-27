@@ -10,12 +10,7 @@ import { signinValidationRules as validationRules } from "components/base/valida
 import successIcon from "../../assets/checked.png";
 
 import { logginAsync } from "../redux/ducks/general";
-import { RootState } from "../redux/types";
-
-const BackgrounPattern = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
+import { RootState } from "../types";
 
 const PageContainer = styled.div`
   background: linear-gradient(#18191a, #40454a);
@@ -92,7 +87,7 @@ const StyledForm = styled.form`
   height: auto;
   padding: 2rem;
   border-radius: 0.8rem;
-  background: #ffffff;
+  background: ${props => props.theme.whiteBackground};
   opacity: 1;
   justify-self: start;
   display: grid;
@@ -170,7 +165,7 @@ const Signin = () => {
   });
 
   return (
-    <BackgrounPattern className="signin__background">
+    <div className="ornament__background">
       <PageContainer>
         <StyledHeading>
           <h1>Built for fun</h1>
@@ -205,13 +200,10 @@ const Signin = () => {
           <FormError>{authError}</FormError>
           <Button
             loadingState={signInLoading}
-            background="#2ebc4f"
-            color="#fff"
             height={6}
             onClick={handleSubmit}
-          >
-            {signedin ? <img src={successIcon} /> : "Signin"}
-          </Button>
+            text={signedin ? <img src={successIcon} /> : "Signin"}
+          />
           <StyledTinyInfo>
             Actually, you cannot sign in as I have made this app for personal
             use only. You can either try to hack it or run on your local
@@ -219,7 +211,7 @@ const Signin = () => {
           </StyledTinyInfo>
         </StyledForm>
       </PageContainer>
-    </BackgrounPattern>
+    </div>
   );
 };
 
