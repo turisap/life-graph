@@ -1,4 +1,6 @@
 *.ts linguist-detectable=true
 *.js linguist-detectable=false
+*.scss linguist-detectable=false
+*.css linguist-detectable=false
 *.tsx linguist-language=Typescript
 *.ts linguist-language=Typescript
