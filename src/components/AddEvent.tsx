@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { SingleDatePicker } from "react-dates";
 import moment from "moment";
 
-import ErrorField from "components/base/ErrorField";
+import ErrorField, { ErrorFieldWrapper } from "components/base/ErrorField";
 import { createEventValidationRules } from "components/base/validationRules";
 import Button from "components/base/Button";
 import useForm from "./base/useForm";
@@ -36,16 +36,16 @@ const RangeForm = styled(EventForm)`
 const AddEvent = () => {
   /* eslint-disable @typescript-eslint/no-use-before-define */
   const submitEvent = e => {
-    handleEventSubmit(e);
+    eventHandleSubmit(e);
   };
 
   const [eventDateFocused, setEventDateFocused] = useState<boolean>(false);
 
   const {
-    values,
-    errors,
-    handleChange,
-    handleSubmit: handleEventSubmit
+    values: eventValues,
+    errors: eventErrors,
+    handleChange: eventHandleChange,
+    handleSubmit: eventHandleSubmit
   } = useForm({
     submitCallback: submitEvent,
     validationRules: createEventValidationRules
@@ -60,28 +60,35 @@ const AddEvent = () => {
             name="event-title"
             title="Event title"
             placeholder="Event title"
-            errors={errors}
-            values={values}
-            onChange={handleChange}
+            errors={eventErrors}
+            values={eventValues}
+            onChange={eventHandleChange}
           />
           <ErrorField
             name="event-color"
             title="Color"
             placeholder="Event color"
-            errors={errors}
-            values={values}
-            onChange={handleChange}
+            errors={eventErrors}
+            values={eventValues}
+            onChange={eventHandleChange}
           />
-          <SingleDatePicker
-            date={moment()}
-            onDateChange={date => {}}
-            focused={eventDateFocused}
-            onFocusChange={({ focused }) => setEventDateFocused(focused)}
-            id="event_date"
+          <ErrorFieldWrapper
+            render={props => (
+              <SingleDatePicker
+                date={moment()}
+                onDateChange={date => {}}
+                focused={eventDateFocused}
+                onFocusChange={({ focused }) => setEventDateFocused(focused)}
+                id="event_date"
+              />
+            )}
+            name="eventDate"
+            title="Event date"
+            errors={eventErrors}
           />
           <Button
             loadingState={false}
-            onClick={handleEventSubmit}
+            onClick={eventHandleSubmit}
             width={15}
             height={4}
             fontSize={1.6}
@@ -93,9 +100,9 @@ const AddEvent = () => {
             name="range-title"
             title="Range title"
             placeholder="Range title"
-            errors={errors}
-            values={values}
-            onChange={handleChange}
+            errors={{}}
+            values={{}}
+            onChange={() => {}}
           />
         </RangeForm>
         {/* <Button /> */}

@@ -85,23 +85,22 @@ const ErrorField: React.FC<ErrorFieldProps> = ({
   </StyledErrorField>
 );
 
-const ErrorFieldWrapper: React.FC<ErrorFieldProps> = ({
-  name,
-  title,
-  placeholder,
-  errors,
-  values,
-  type,
-  onChange,
-  children
-}) => (
+const ErrorFieldWrapper: React.FC<{
+  render: any;
+  title: string;
+  errors: Error;
+  name: string;
+}> = props => (
   <StyledErrorField>
-    <p className={cn("error-field__title", { _error: errors[name] })}>
-      {title}
+    <p
+      className={cn("error-field__title", { _error: props.errors[props.name] })}
+    >
+      {props.title}
     </p>
-    {children}
-    <Error>{errors[name]}</Error>
+    {props.render(props)}
+    <Error>{props.errors[props.name]}</Error>
   </StyledErrorField>
 );
 
 export default ErrorField;
+export { ErrorFieldWrapper };
