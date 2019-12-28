@@ -17,7 +17,7 @@ type ButtonProps = {
 const StyledButton = styled.button<ButtonProps>`
   width: ${props => props.width + "rem" || "100%"};
   height: ${props => props.height + "rem" || "100%"};
-  background: ${props => props.background || "#2ebc4f"};
+  background: ${props => props.background || props.theme.greenBackground};
   color: ${props => props.color || props.theme.buttonColor};
 
   border: none;

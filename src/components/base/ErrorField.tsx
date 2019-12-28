@@ -34,7 +34,8 @@ const StyledErrorField = styled.div`
     color: ${props => props.theme.textError};
   }
 
-  input {
+  .input-real,
+  .error-wrapper__fake-input {
     border-radius: 4px;
     border: 1px solid rgb(209, 213, 218);
     padding-left: 8px;
@@ -80,6 +81,7 @@ const ErrorField: React.FC<ErrorFieldProps> = ({
       type={type ? type : "text"}
       onChange={onChange}
       form="novalidatedform"
+      className="input-real"
     />
     <Error>{errors[name]}</Error>
   </StyledErrorField>
@@ -97,7 +99,7 @@ const ErrorFieldWrapper: React.FC<{
     >
       {props.title}
     </p>
-    {props.render(props)}
+    <div className="error-wrapper__fake-input">{props.render(props)}</div>
     <Error>{props.errors[props.name]}</Error>
   </StyledErrorField>
 );

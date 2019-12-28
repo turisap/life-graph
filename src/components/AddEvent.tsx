@@ -80,6 +80,8 @@ const AddEvent = () => {
                 focused={eventDateFocused}
                 onFocusChange={({ focused }) => setEventDateFocused(focused)}
                 id="event_date"
+                noBorder={true}
+                numberOfMonths={1}
               />
             )}
             name="eventDate"

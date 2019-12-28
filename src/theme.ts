@@ -4,5 +4,6 @@ export const theme = {
   textError: "rgb(203, 36, 49)",
 
   // backgrounds
-  whiteBackground: "#ffffff;"
+  whiteBackground: "#ffffff",
+  greenBackground: "#2ebc4f"
 };

@@ -18,6 +18,8 @@ import { firestore } from "../firebase/firebase";
 import { logginAsync } from "./redux/ducks/general";
 import { RootState, User } from "./types";
 
+// TODO push notifications with timers as at work
+
 const App = () => {
   const dispatch = useDispatch();
   const authenticated = useSelector(

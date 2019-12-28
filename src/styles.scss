@@ -15,7 +15,6 @@ body {
   height: 100vh;
   box-sizing: border-box;
   font-family: "Open Sans", sans-serif;
-  background-color: #f0fcfc;
 }
 
 body {
@@ -57,3 +56,48 @@ h1 {
   justify-content: center;
   align-items: center;
 }
+
+// libs overrides
+
+// react-dates
+// .SingleDatePicker {
+//   height: 100%;
+//   background: transparent;
+//   overflow: hidden;
+
+//   // input {
+//   //   height: 3.8rem;
+//   //   padding: 0;
+//   // }
+// }
+
+// .DateInput_input.DateInput_input_1.DateInput_input__focused.DateInput_input__focused_2 {
+//   border-bottom: none;
+// }
+
+// .CalendarDay.CalendarDay_1.CalendarDay__default.CalendarDay__default_2.CalendarDay__selected {
+//   background: #2ebc4f;
+//   border: none;
+// }
+
+// #app
+//   > div
+//   > div
+//   > form.sc-htoDjs.bwpHsp
+//   > div:nth-child(3)
+//   > div
+//   > div
+//   > div
+//   > div
+//   > div.SingleDatePicker_picker.SingleDatePicker_picker_1.SingleDatePicker_picker__directionLeft.SingleDatePicker_picker__directionLeft_2
+//   > div
+//   > div
+//   > div
+//   > div.DayPicker_focusRegion.DayPicker_focusRegion_1
+//   > div:nth-child(3)
+//   > button {
+//   display: none;
+//   &::before {
+//     content: none;
+//   }
+// }
