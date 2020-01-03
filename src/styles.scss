@@ -61,8 +61,36 @@ h1 {
 
 // react-dates
 .SingleDatePicker {
+  color: rgba(0, 0, 0, 0);
+  font-size: 16px;
   height: 100%;
   background: transparent;
+  .DateInput_input {
+    padding: 0;
+    height: 38px;
+    border: none;
+    width: 100%;
+    font-weight: 400 !important;
+  }
+
+  .SingleDatePickerInput_clearDate {
+    svg {
+      transform: rotateZ(0deg);
+      transition: transform 0.2s ease-in;
+    }
+
+    &:hover {
+      background: none;
+      svg {
+        transform: rotateZ(45deg);
+        transition: transform 0.2s ease-in;
+      }
+    }
+    &:focus {
+      outline: none;
+      background: none;
+    }
+  }
 }
 
 .DateInput_input.DateInput_input_1.DateInput_input__focused.DateInput_input__focused_2 {

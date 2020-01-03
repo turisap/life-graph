@@ -55,7 +55,7 @@ const NavBar = () => {
       )}
       {token && (
         <>
-          <Link to="/create">
+          <Link to="/create-event">
             <span>Create</span>
           </Link>
           <Link to="/signout">

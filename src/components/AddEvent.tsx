@@ -2,11 +2,15 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { SingleDatePicker } from "react-dates";
 import moment from "moment";
+import { useSelector, useDispatch } from "react-redux";
 
 import ErrorField, { ErrorFieldWrapper } from "components/base/ErrorField";
 import { createEventValidationRules } from "components/base/validationRules";
 import Button from "components/base/Button";
+
 import useForm from "./base/useForm";
+import { setEventDate } from "../redux/ducks/events";
+import { RootState } from "../types";
 
 const PageContainer = styled.div``;
 
@@ -40,6 +44,7 @@ const AddEvent = () => {
   };
 
   const [eventDateFocused, setEventDateFocused] = useState<boolean>(false);
+  const dispatch = useDispatch();
 
   const {
     values: eventValues,
@@ -51,6 +56,10 @@ const AddEvent = () => {
     validationRules: createEventValidationRules
   });
   /* eslint-enable @typescript-eslint/no-use-before-define */
+
+  const toggleFocus = () => setEventDateFocused(!eventDateFocused);
+  const setEventDateToRedux = date => dispatch(setEventDate(date));
+  const event = useSelector((state: RootState) => state.events.event);
 
   return (
     <PageContainer className="ornament__background">
@@ -73,14 +82,16 @@ const AddEvent = () => {
             onChange={eventHandleChange}
           />
           <ErrorFieldWrapper
-            render={props => (
+            onClickHandler={toggleFocus}
+            render={() => (
               <SingleDatePicker
-                date={moment()}
-                onDateChange={date => {}}
+                date={event.date}
+                onDateChange={setEventDateToRedux}
                 focused={eventDateFocused}
-                onFocusChange={({ focused }) => setEventDateFocused(focused)}
+                onFocusChange={toggleFocus}
                 id="event_date"
                 noBorder={true}
+                showClearDate
                 numberOfMonths={1}
               />
             )}

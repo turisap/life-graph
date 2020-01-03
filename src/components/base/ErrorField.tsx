@@ -10,7 +10,13 @@ type ErrorFieldProps = {
   values: Value;
   type?: string;
   onChange: (e: any) => void;
+  onClickHandler?: (e: any) => void;
 };
+
+type ErrorFieldWrapperProps = Pick<
+  ErrorFieldProps,
+  "name" | "errors" | "title" | "onClickHandler"
+> & { render: any };
 
 export type Error = {
   [key: string]: string;
@@ -87,19 +93,16 @@ const ErrorField: React.FC<ErrorFieldProps> = ({
   </StyledErrorField>
 );
 
-const ErrorFieldWrapper: React.FC<{
-  render: any;
-  title: string;
-  errors: Error;
-  name: string;
-}> = props => (
+const ErrorFieldWrapper: React.FC<ErrorFieldWrapperProps> = props => (
   <StyledErrorField>
     <p
       className={cn("error-field__title", { _error: props.errors[props.name] })}
     >
       {props.title}
     </p>
-    <div className="error-wrapper__fake-input">{props.render(props)}</div>
+    <div className="error-wrapper__fake-input" onClick={props.onClickHandler}>
+      {props.render(props)}
+    </div>
     <Error>{props.errors[props.name]}</Error>
   </StyledErrorField>
 );

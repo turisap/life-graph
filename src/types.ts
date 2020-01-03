@@ -15,6 +15,7 @@ export interface SignInFireBaseResponseShape {
 
 export interface RootState {
   general: GeneralReducerState;
+  events: EventReducerState;
 }
 
 export interface GeneralReducerState {
@@ -24,6 +25,20 @@ export interface GeneralReducerState {
   user: User;
   authError: string;
 }
+
+type Event = {
+  date: Moment;
+};
+
+type EventRange = Omit<Event, "date"> & {
+  from: Moment;
+  to: Moment;
+};
+
+export type EventReducerState = {
+  event: Event;
+  eventRange: EventRange;
+};
 
 // forms
 
