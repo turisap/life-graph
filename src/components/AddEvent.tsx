@@ -22,6 +22,24 @@ const PageContainer = styled.div``;
 
 const Overlay = styled.div`
   display: flex;
+  padding: 2rem;
+  width: auto;
+
+  @media (max-width: 570px) and (orientation: portrait) {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  @media (max-height: 580px) and (orientation: landscape) {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  @media (max-device-width: 400px) and (orientation: portrait) {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-around;
+  }
 `;
 
 const EventForm = styled.form`
@@ -30,17 +48,39 @@ const EventForm = styled.form`
   flex-direction: column;
   flex: 0 1 40rem;
   background: ${props => props.theme.whiteBackground};
-  margin-right: 1.5rem;
+  margin-right: 2rem;
   border-radius: 0.8rem;
   height: 48rem;
 
   button {
     margin-top: auto;
     align-self: flex-end;
+    padding: 1rem;
+  }
+
+  @media (max-width: 570px) and (orientation: portrait) {
+    margin: 0rem;
+    margin-top: 2rem;
+  }
+
+  @media (max-height: 580px) and (orientation: landscape) {
+    margin: 0rem;
+    margin-top: 2rem;
+  }
+
+  @media (max-device-width: 400px) and (orientation: portrait) {
+    height: auto;
+    margin: 0rem;
+    margin-top: 2rem;
+
+    button {
+      width: 25rem;
+    }
   }
 `;
+
 const RangeForm = styled(EventForm)`
-  margin-left: 1.5rem;
+  margin-right: 0rem;
 `;
 
 const AddEvent = () => {
@@ -51,6 +91,7 @@ const AddEvent = () => {
   const [eventDate, setEventDate] = useState<Moment>();
   const [rangeStartDate, setRangeStartDate] = useState<Moment>();
   const [rangeEndDate, setRangeEndDate] = useState<Moment>();
+
   const dispatch = useDispatch();
 
   const toggleFocus = ({ focused }) => setEventDateFocused(focused);

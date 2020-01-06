@@ -10,6 +10,7 @@ const getToken = (state: RootState) => state.general.user.accessToken;
 const StyledNav = styled.nav`
   display: flex;
   background: black;
+  min-height: 4rem;
 
   & > a {
     flex: 1 1 10rem;

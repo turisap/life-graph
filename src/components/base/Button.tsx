@@ -49,7 +49,7 @@ const StyledButton = styled.button<ButtonProps>`
 
 const Button: React.FC<ButtonProps> = props => {
   return (
-    <StyledButton {...props}>
+    <StyledButton>
       {props.loadingState ? (
         <Spinner
           size={props.height ? props.height * 6 : 40}

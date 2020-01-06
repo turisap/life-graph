@@ -16,6 +16,7 @@ const StyledFooter = styled.footer`
     font-size: 1.4rem;
     font-weight: 400;
     margin-left: 2rem;
+    min-height: 4rem;
   }
 
   &:hover {

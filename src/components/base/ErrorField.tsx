@@ -61,7 +61,7 @@ const StyledErrorField = styled.div`
   }
 
   @media (max-device-width: 500px) and (orientation: portrait) {
-    grid-template-rows: 6rem 9rem 1.3rem;
+    grid-template-rows: 6rem 6rem 1.3rem;
     font-size: 4rem;
   }
 `;
