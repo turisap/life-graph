@@ -6,13 +6,23 @@ import { from, of } from "rxjs";
 import { filter, exhaustMap, catchError } from "rxjs/operators";
 
 import { db } from "../../../firebase/firebase";
-import { EventReducerState, EventResponse, Event } from "../../types";
+import {
+  EventReducerState,
+  EventResponse,
+  Event,
+  EventRange
+} from "../../types";
 
 const eventsActionCreator = actionCreatorFactory("@Events");
 
 export const postEventToFirestore = eventsActionCreator.async<Event, any, any>(
   "postEventToFirestore"
 );
+export const postRangeToFireStore = eventsActionCreator.async<
+  EventRange,
+  any,
+  any
+>("postRangeToFireStore");
 export const getAllEvents = eventsActionCreator.async<any, any, any>(
   "getAllEvents"
 );

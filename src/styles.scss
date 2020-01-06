@@ -135,3 +135,9 @@ input {
     font-size: 1.6rem !important;
   }
 }
+
+.CalendarDay__blocked_calendar {
+  background: transparent !important;
+  border: 1px solid #e4e7e7 !important;
+  color: #cacccd !important;
+}

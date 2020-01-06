@@ -56,6 +56,10 @@ const StyledErrorField = styled.div`
     }
   }
 
+  .error-wrapper__fake-input._error {
+    border: 1px solid ${props => props.theme.textError};
+  }
+
   @media (max-device-width: 500px) and (orientation: portrait) {
     grid-template-rows: 6rem 9rem 1.3rem;
     font-size: 4rem;
@@ -105,7 +109,12 @@ const ErrorFieldWrapper: React.FC<ErrorFieldWrapperProps> = props => (
     >
       {props.title}
     </p>
-    <div className="error-wrapper__fake-input" onClick={props.onClickHandler}>
+    <div
+      className={cn("error-wrapper__fake-input", {
+        _error: props.errors[props.name]
+      })}
+      onClick={props.onClickHandler}
+    >
       {props.render(props)}
     </div>
     <Error>{props.errors[props.name]}</Error>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { SingleDatePicker } from "react-dates";
 import { useDispatch } from "react-redux";
-import { Moment } from "moment";
+import moment, { Moment } from "moment";
 
 import ErrorField, { ErrorFieldWrapper } from "components/base/ErrorField";
 import Button from "components/base/Button";
@@ -196,6 +196,7 @@ const AddEvent = () => {
               <SingleDatePicker
                 date={rangeEndDate}
                 onDateChange={changeRangeDates("endDate")}
+                isDayBlocked={day => day.isSameOrBefore(rangeStartDate)}
                 focused={endDateFocused}
                 placeholder="End date"
                 onFocusChange={toggleEndFocus}
