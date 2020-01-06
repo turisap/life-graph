@@ -27,6 +27,10 @@ h1 {
   padding: 0px;
 }
 
+input {
+  line-height: 1.5;
+}
+
 #app {
   height: 100%;
   display: grid;
@@ -121,5 +125,13 @@ h1 {
   display: none;
   &::before {
     content: none;
+  }
+}
+
+#rangeStart,
+#rangeEnd,
+#eventDate {
+  &::placeholder {
+    font-size: 1.6rem !important;
   }
 }

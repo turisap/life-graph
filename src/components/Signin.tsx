@@ -6,9 +6,9 @@ import { useHistory } from "react-router-dom";
 import ErrorField from "components/base/ErrorField";
 import useForm from "components/base/useForm";
 import Button from "components/base/Button";
-import { signinValidationRules as validationRules } from "components/base/validationRules.ts";
-import successIcon from "../../assets/checked.png";
 
+import { signinValidationRules as validationRules } from "../lib/validationRules.ts";
+import successIcon from "../../assets/checked.png";
 import { logginAsync } from "../redux/ducks/general";
 import { RootState } from "../types";
 

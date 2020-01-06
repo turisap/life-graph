@@ -4,7 +4,9 @@ import { Error } from "./ErrorField";
 type UseFormProps = {
   submitCallback: (values: any) => void;
   validationRules: (values: any) => any;
-  defaults?: [];
+  defaults?: {
+    [key: string]: string;
+  };
 };
 
 const useForm = ({
@@ -29,7 +31,9 @@ const useForm = ({
   };
 
   const handleChange = e => {
-    e.persist();
+    if (e.persist) {
+      e.persist();
+    }
     setValues({
       ...values,
       [e.target.name]: e.target.value

@@ -30,14 +30,19 @@ const StyledErrorField = styled.div`
   display: grid;
   grid-template-rows: 2.8rem 4rem 1.3rem;
   grid-template-columns: 1fr;
+  margin-top: 17px;
 
   .error-field__title {
     margin-bottom: 1rem;
     font-weight: 600;
   }
 
-  ._error {
+  p._error {
     color: ${props => props.theme.textError};
+  }
+
+  input._error {
+    border: 1px solid ${props => props.theme.textError};
   }
 
   .input-real,
@@ -87,7 +92,7 @@ const ErrorField: React.FC<ErrorFieldProps> = ({
       type={type ? type : "text"}
       onChange={onChange}
       form="novalidatedform"
-      className="input-real"
+      className={cn("input-real", { _error: errors[name] })}
     />
     <Error>{errors[name]}</Error>
   </StyledErrorField>

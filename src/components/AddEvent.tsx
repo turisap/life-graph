@@ -1,16 +1,19 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { SingleDatePicker } from "react-dates";
-import moment from "moment";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
+import { Moment } from "moment";
 
 import ErrorField, { ErrorFieldWrapper } from "components/base/ErrorField";
-import { createEventValidationRules } from "components/base/validationRules";
 import Button from "components/base/Button";
 
 import useForm from "./base/useForm";
-import { setEventDate } from "../redux/ducks/events";
-import { RootState } from "../types";
+import { postEventToFirestore } from "../redux/ducks/events";
+import { Event } from "../types";
+import {
+  createEventValidationRules,
+  createRangeValidationRules
+} from "../lib/validationRules";
 
 const PageContainer = styled.div``;
 
@@ -26,7 +29,7 @@ const EventForm = styled.form`
   background: ${props => props.theme.whiteBackground};
   margin-right: 1.5rem;
   border-radius: 0.8rem;
-  height: 30rem;
+  height: 48rem;
 
   button {
     margin-top: auto;
@@ -39,12 +42,52 @@ const RangeForm = styled(EventForm)`
 
 const AddEvent = () => {
   /* eslint-disable @typescript-eslint/no-use-before-define */
-  const submitEvent = e => {
-    eventHandleSubmit(e);
+  const [eventDateFocused, setEventDateFocused] = useState<boolean>(false);
+  const [startDateFocused, setStartDateFocused] = useState<boolean>(false);
+  const [endDateFocused, setEndDateFocused] = useState<boolean>(false);
+  const [eventDate, setEventDate] = useState<Moment>();
+  const [rangeStartDate, setRangeStartDate] = useState<Moment>();
+  const [rangeEndDate, setRangeEndDate] = useState<Moment>();
+  const dispatch = useDispatch();
+
+  const toggleFocus = ({ focused }) => setEventDateFocused(focused);
+  const toggleStartFocus = ({ focused }) => setStartDateFocused(focused);
+  const toggleEndFocus = ({ focused }) => setEndDateFocused(focused);
+
+  const submitEvent = (values: Event) => {
+    dispatch(postEventToFirestore.started(values));
   };
 
-  const [eventDateFocused, setEventDateFocused] = useState<boolean>(false);
-  const dispatch = useDispatch();
+  const submitRange = values => {
+    console.log(values);
+  };
+
+  const changeDate = (value: Moment) => {
+    setEventDate(value);
+    eventHandleChange({
+      target: {
+        name: "eventDate",
+        value: value
+      }
+    });
+  };
+
+  const changeRangeDates = (name: "startDate" | "endDate") => (
+    value: Moment
+  ) => {
+    if (name === "startDate") {
+      setRangeStartDate(value);
+    }
+    if (name === "endDate") {
+      setRangeEndDate(value);
+    }
+    rangeHandleChange({
+      target: {
+        name,
+        value
+      }
+    });
+  };
 
   const {
     values: eventValues,
@@ -55,18 +98,24 @@ const AddEvent = () => {
     submitCallback: submitEvent,
     validationRules: createEventValidationRules
   });
-  /* eslint-enable @typescript-eslint/no-use-before-define */
 
-  const toggleFocus = () => setEventDateFocused(!eventDateFocused);
-  const setEventDateToRedux = date => dispatch(setEventDate(date));
-  const event = useSelector((state: RootState) => state.events.event);
+  const {
+    values: rangeValues,
+    errors: rangeErrors,
+    handleChange: rangeHandleChange,
+    handleSubmit: rangeHandleSubmit
+  } = useForm({
+    submitCallback: submitRange,
+    validationRules: createRangeValidationRules
+  });
+  /* eslint-enable @typescript-eslint/no-use-before-define */
 
   return (
     <PageContainer className="ornament__background">
       <Overlay className="overlay">
-        <EventForm>
+        <EventForm autocomplete="off">
           <ErrorField
-            name="event-title"
+            name="eventTitle"
             title="Event title"
             placeholder="Event title"
             errors={eventErrors}
@@ -74,7 +123,7 @@ const AddEvent = () => {
             onChange={eventHandleChange}
           />
           <ErrorField
-            name="event-color"
+            name="eventColor"
             title="Color"
             placeholder="Event color"
             errors={eventErrors}
@@ -82,17 +131,16 @@ const AddEvent = () => {
             onChange={eventHandleChange}
           />
           <ErrorFieldWrapper
-            onClickHandler={toggleFocus}
             render={() => (
               <SingleDatePicker
-                date={event.date}
-                onDateChange={setEventDateToRedux}
+                date={eventDate}
+                onDateChange={changeDate}
                 focused={eventDateFocused}
                 onFocusChange={toggleFocus}
-                id="event_date"
-                noBorder={true}
-                showClearDate
                 numberOfMonths={1}
+                id="eventDate"
+                noBorder
+                block
               />
             )}
             name="eventDate"
@@ -108,17 +156,68 @@ const AddEvent = () => {
             text="Add event"
           />
         </EventForm>
-        <RangeForm>
+        <RangeForm autocomplete="off">
           <ErrorField
-            name="range-title"
+            name="rangeTitle"
             title="Range title"
             placeholder="Range title"
-            errors={{}}
-            values={{}}
-            onChange={() => {}}
+            errors={rangeErrors}
+            values={rangeValues}
+            onChange={rangeHandleChange}
+          />
+          <ErrorField
+            name="rangeColor"
+            title="Range Color"
+            placeholder="Range color"
+            errors={rangeErrors}
+            values={rangeValues}
+            onChange={rangeHandleChange}
+          />
+          <ErrorFieldWrapper
+            render={() => (
+              <SingleDatePicker
+                date={rangeStartDate}
+                onDateChange={changeRangeDates("startDate")}
+                focused={startDateFocused}
+                placeholder="Start date"
+                onFocusChange={toggleStartFocus}
+                numberOfMonths={1}
+                id="rangeStart"
+                noBorder
+                block
+              />
+            )}
+            name="startDate"
+            title="Range start date"
+            errors={rangeErrors}
+          />
+          <ErrorFieldWrapper
+            render={() => (
+              <SingleDatePicker
+                date={rangeEndDate}
+                onDateChange={changeRangeDates("endDate")}
+                focused={endDateFocused}
+                placeholder="End date"
+                onFocusChange={toggleEndFocus}
+                numberOfMonths={1}
+                id="rangeEnd"
+                noBorder
+                block
+              />
+            )}
+            name="endDate"
+            title="Range end date"
+            errors={rangeErrors}
+          />
+          <Button
+            onClick={rangeHandleSubmit}
+            text="Add range"
+            loadingState={false}
+            width={15}
+            height={4}
+            fontSize={1.6}
           />
         </RangeForm>
-        {/* <Button /> */}
       </Overlay>
     </PageContainer>
   );

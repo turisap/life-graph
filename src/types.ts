@@ -1,7 +1,6 @@
 import { Moment } from "moment";
 
 // redux related
-
 export type User = {
   refreshToken: string | null;
   accessToken: string | null;
@@ -26,29 +25,29 @@ export interface GeneralReducerState {
   authError: string;
 }
 
-type Event = {
-  date: Moment;
+export type Event = {
+  eventDate: Moment | string;
+  eventColor: string;
+  eventTitle: string;
 };
 
-type EventRange = Omit<Event, "date"> & {
-  from: Moment;
-  to: Moment;
+export type EventRange = {
+  rangeTitle: string;
+  rangeColor: string;
+  startDate: Moment | string;
+  endDate: Moment | string;
 };
 
 export type EventReducerState = {
-  event: Event;
-  eventRange: EventRange;
+  events: Event[];
+  eventRanges: EventRange[];
 };
 
 // forms
-
 export type SignInFormErrors = {
   email?: string;
   password?: string;
 };
 
-export type CreateEventFromValues = {
-  title: string;
-  color: string;
-  date: Moment | string;
-};
+// backend responses
+export type EventResponse = Event & { data: () => any };

@@ -4,16 +4,18 @@ import styled from "styled-components";
 const StyledFooter = styled.footer`
   display: flex;
   background: black;
+  justify-content: flex-start;
 
   & > a {
-    flex: 1 1 10rem;
+    flex: 0 1 18rem;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     text-decoration: none;
     color: rgb(255, 255, 255);
     font-size: 1.4rem;
-    font-weight: 700;
+    font-weight: 400;
+    margin-left: 2rem;
   }
 
   &:hover {
@@ -27,7 +29,7 @@ const StyledFooter = styled.footer`
 const Footer = () => (
   <StyledFooter>
     <a href="https://github.com/turisap" target="blank">
-      Created by <code> turisap</code>
+      Made by <code>&#123; turisap &#125;</code>
     </a>
   </StyledFooter>
 );
