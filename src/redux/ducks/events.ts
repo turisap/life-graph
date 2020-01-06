@@ -29,7 +29,9 @@ export const getAllEvents = eventsActionCreator.async<any, any, any>(
 
 const DEFAULT_STATE: EventReducerState = {
   events: [],
-  eventRanges: []
+  eventRanges: [],
+  eventLoading: false,
+  rangeLoading: false
 };
 
 const events = reducerWithInitialState(DEFAULT_STATE);
@@ -43,13 +45,33 @@ events.case(getAllEvents.done, (state, payload: any) => {
   };
 });
 
+events.case(postEventToFirestore.started, state => ({
+  ...state,
+  eventLoading: true
+}));
+
+events.case(postEventToFirestore.done, state => ({
+  ...state,
+  eventLoading: false
+}));
+
+events.case(postRangeToFireStore.started, state => ({
+  ...state,
+  rangeLoading: true
+}));
+
+events.case(postRangeToFireStore.done, state => ({
+  ...state,
+  rangeLoading: false
+}));
+
 const eventsRef = db.collection("events");
+const rangeRef = db.collection("ranges");
 
 const createEventEpic$ = action$ =>
   action$.pipe(
     filter(postEventToFirestore.started.match),
     exhaustMap(({ payload: { eventTitle, eventColor, eventDate } }: any) => {
-      console.log(eventTitle, eventColor, eventDate);
       return from(
         eventsRef
           .add({
@@ -64,6 +86,34 @@ const createEventEpic$ = action$ =>
     catchError(error =>
       of(
         postEventToFirestore.failed({
+          error,
+          params: {} as any
+        })
+      )
+    )
+  );
+
+const createRangeEpic$ = action$ =>
+  action$.pipe(
+    filter(postRangeToFireStore.started.match),
+    exhaustMap(
+      ({ payload: { rangeTitle, rangeColor, startDate, endDate } }: any) => {
+        return from(
+          rangeRef
+            .add({
+              rangeTitle,
+              rangeColor,
+              startDate: startDate.utc().format(),
+              endDate: endDate.utc().format()
+            })
+            .then(postRangeToFireStore.done)
+            .catch(postRangeToFireStore.failed)
+        );
+      }
+    ),
+    catchError(error =>
+      of(
+        postRangeToFireStore.failed({
           error,
           params: {} as any
         })
@@ -92,5 +142,9 @@ const getAllEventsEpic$ = action$ =>
     )
   );
 
-const eventsEpic = combineEpics(createEventEpic$, getAllEventsEpic$);
+const eventsEpic = combineEpics(
+  createEventEpic$,
+  getAllEventsEpic$,
+  createRangeEpic$
+);
 export { events, eventsEpic };

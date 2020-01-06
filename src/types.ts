@@ -25,6 +25,13 @@ export interface GeneralReducerState {
   authError: string;
 }
 
+export type EventReducerState = {
+  events: Event[];
+  eventRanges: EventRange[];
+  eventLoading: boolean;
+  rangeLoading: boolean;
+};
+
 export type Event = {
   eventDate: Moment | string;
   eventColor: string;
@@ -36,11 +43,6 @@ export type EventRange = {
   rangeColor: string;
   startDate: Moment | string;
   endDate: Moment | string;
-};
-
-export type EventReducerState = {
-  events: Event[];
-  eventRanges: EventRange[];
 };
 
 // forms

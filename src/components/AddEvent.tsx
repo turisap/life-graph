@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { SingleDatePicker } from "react-dates";
-import { useDispatch } from "react-redux";
-import moment, { Moment } from "moment";
+import { useDispatch, useSelector } from "react-redux";
+import { Moment } from "moment";
 
 import ErrorField, { ErrorFieldWrapper } from "components/base/ErrorField";
 import Button from "components/base/Button";
 
 import useForm from "./base/useForm";
-import { postEventToFirestore } from "../redux/ducks/events";
-import { Event } from "../types";
+import {
+  postEventToFirestore,
+  postRangeToFireStore
+} from "../redux/ducks/events";
+import { Event, EventRange, RootState } from "../types";
 import {
   createEventValidationRules,
   createRangeValidationRules
@@ -54,12 +57,19 @@ const AddEvent = () => {
   const toggleStartFocus = ({ focused }) => setStartDateFocused(focused);
   const toggleEndFocus = ({ focused }) => setEndDateFocused(focused);
 
+  const eventIsLoading = useSelector(
+    (state: RootState) => state.events.eventLoading
+  );
+  const rangeIsLoading = useSelector(
+    (state: RootState) => state.events.rangeLoading
+  );
+
   const submitEvent = (values: Event) => {
     dispatch(postEventToFirestore.started(values));
   };
 
-  const submitRange = values => {
-    console.log(values);
+  const submitRange = (values: EventRange) => {
+    dispatch(postRangeToFireStore.started(values));
   };
 
   const changeDate = (value: Moment) => {
@@ -148,7 +158,7 @@ const AddEvent = () => {
             errors={eventErrors}
           />
           <Button
-            loadingState={false}
+            loadingState={eventIsLoading}
             onClick={eventHandleSubmit}
             width={15}
             height={4}
@@ -213,7 +223,7 @@ const AddEvent = () => {
           <Button
             onClick={rangeHandleSubmit}
             text="Add range"
-            loadingState={false}
+            loadingState={rangeIsLoading}
             width={15}
             height={4}
             fontSize={1.6}
