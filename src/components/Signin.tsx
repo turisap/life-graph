@@ -201,7 +201,7 @@ const Signin = () => {
           <Button
             loadingState={signInLoading}
             height={6}
-            onClick={handleSubmit}
+            onClickHandler={handleSubmit}
             text={signedin ? <img src={successIcon} /> : "Signin"}
           />
           <StyledTinyInfo>

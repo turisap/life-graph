@@ -200,7 +200,7 @@ const AddEvent = () => {
           />
           <Button
             loadingState={eventIsLoading}
-            onClick={eventHandleSubmit}
+            onClickHandler={eventHandleSubmit}
             width={15}
             height={4}
             fontSize={1.6}
@@ -262,7 +262,7 @@ const AddEvent = () => {
             errors={rangeErrors}
           />
           <Button
-            onClick={rangeHandleSubmit}
+            onClickHandler={rangeHandleSubmit}
             text="Add range"
             loadingState={rangeIsLoading}
             width={15}

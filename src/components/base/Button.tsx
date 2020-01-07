@@ -11,7 +11,7 @@ type ButtonProps = {
   color?: string;
   background?: string;
   loadingState: boolean;
-  onClick: (values: any) => void;
+  onClickHandler: (values: any) => void;
 };
 
 const StyledButton = styled.button<ButtonProps>`
@@ -49,7 +49,7 @@ const StyledButton = styled.button<ButtonProps>`
 
 const Button: React.FC<ButtonProps> = props => {
   return (
-    <StyledButton>
+    <StyledButton onClick={props.onClickHandler}>
       {props.loadingState ? (
         <Spinner
           size={props.height ? props.height * 6 : 40}
