@@ -52,8 +52,8 @@ export const createRangeValidationRules = (values: EventRange) => {
   if (!values.startDate) {
     errors.startDate = "Start date is required";
   }
-  if (!values.endDate) {
-    errors.endDate = "End date is required";
-  }
+  // if (!values.endDate) {
+  //   errors.endDate = "End date is required";
+  // }
   return errors;
 };

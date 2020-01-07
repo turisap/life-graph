@@ -232,6 +232,7 @@ const AddEvent = () => {
                 onFocusChange={toggleStartFocus}
                 numberOfMonths={1}
                 id="rangeStart"
+                isOutsideRange={() => false}
                 noBorder
                 block
               />
@@ -245,12 +246,13 @@ const AddEvent = () => {
               <SingleDatePicker
                 date={rangeEndDate}
                 onDateChange={changeRangeDates("endDate")}
-                isDayBlocked={day => day.isSameOrBefore(rangeStartDate)}
+                disabled={!rangeStartDate}
                 focused={endDateFocused}
                 placeholder="End date"
                 onFocusChange={toggleEndFocus}
                 numberOfMonths={1}
                 id="rangeEnd"
+                isOutsideRange={() => false}
                 noBorder
                 block
               />

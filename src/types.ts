@@ -30,6 +30,7 @@ export type EventReducerState = {
   eventRanges: EventRange[];
   eventLoading: boolean;
   rangeLoading: boolean;
+  homeDataLoading: boolean;
 };
 
 export type Event = {
@@ -52,4 +53,8 @@ export type SignInFormErrors = {
 };
 
 // backend responses
-export type EventResponse = Event & { data: () => any };
+export type FireBaseResponse = {
+  data: () => any;
+};
+export type EventResponse = Event & FireBaseResponse;
+export type RangeResponse = Range & FireBaseResponse;

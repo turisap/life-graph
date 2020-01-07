@@ -3,12 +3,13 @@ import actionCreatorFactory from "typescript-fsa";
 import { reducerWithInitialState } from "typescript-fsa-reducers";
 import "typescript-fsa-redux-observable";
 import { from, of } from "rxjs";
-import { filter, exhaustMap, catchError } from "rxjs/operators";
+import { filter, exhaustMap, catchError, switchMap } from "rxjs/operators";
 
 import { db } from "../../../firebase/firebase";
 import {
   EventReducerState,
   EventResponse,
+  RangeResponse,
   Event,
   EventRange
 } from "../../types";
@@ -23,27 +24,18 @@ export const postRangeToFireStore = eventsActionCreator.async<
   any,
   any
 >("postRangeToFireStore");
-export const getAllEvents = eventsActionCreator.async<any, any, any>(
-  "getAllEvents"
-);
+export const getAllEvents = eventsActionCreator.async("getAllEvents");
+export const getAllRanges = eventsActionCreator.async("getAllRanges");
 
 const DEFAULT_STATE: EventReducerState = {
   events: [],
   eventRanges: [],
   eventLoading: false,
-  rangeLoading: false
+  rangeLoading: false,
+  homeDataLoading: false
 };
 
 const events = reducerWithInitialState(DEFAULT_STATE);
-
-events.case(getAllEvents.done, (state, payload: any) => {
-  const events: Event[] = [];
-  payload.forEach((doc: EventResponse) => events.push(doc.data()));
-  return {
-    ...state,
-    events
-  };
-});
 
 events.case(postEventToFirestore.started, state => ({
   ...state,
@@ -64,6 +56,29 @@ events.case(postRangeToFireStore.done, state => ({
   ...state,
   rangeLoading: false
 }));
+
+events.case(getAllEvents.started, state => ({
+  ...state,
+  homeDataLoading: true
+}));
+
+events.case(getAllEvents.done, (state, payload: any) => {
+  const events: Event[] = [];
+  payload.forEach((doc: EventResponse) => events.push(doc.data()));
+  return {
+    ...state,
+    events
+  };
+});
+
+events.case(getAllRanges.done, (state, payload: any) => {
+  const eventRanges: EventRange[] = [];
+  payload.forEach((doc: RangeResponse) => eventRanges.push(doc.data()));
+  return {
+    ...state,
+    eventRanges
+  };
+});
 
 const eventsRef = db.collection("events");
 const rangeRef = db.collection("ranges");
@@ -104,7 +119,7 @@ const createRangeEpic$ = action$ =>
               rangeTitle,
               rangeColor,
               startDate: startDate.utc().format(),
-              endDate: endDate.utc().format()
+              endDate: endDate ? endDate.utc().format() : ""
             })
             .then(postRangeToFireStore.done)
             .catch(postRangeToFireStore.failed)
@@ -124,14 +139,14 @@ const createRangeEpic$ = action$ =>
 const getAllEventsEpic$ = action$ =>
   action$.pipe(
     filter(getAllEvents.started.match),
-    exhaustMap(() => {
-      return from(
+    exhaustMap(() =>
+      from(
         eventsRef
           .get()
           .then(getAllEvents.done)
           .catch(getAllEvents.failed)
-      );
-    }),
+      )
+    ),
     catchError(error =>
       of(
         getAllEvents.failed({
@@ -142,9 +157,31 @@ const getAllEventsEpic$ = action$ =>
     )
   );
 
+const getAllRangesEpic$ = action$ =>
+  action$.pipe(
+    filter(getAllRanges.started.match),
+    switchMap(() =>
+      from(
+        rangeRef
+          .get()
+          .then(getAllRanges.done)
+          .catch(getAllRanges.failed)
+      )
+    ),
+    catchError(error =>
+      of(
+        getAllRanges.failed({
+          error,
+          params: {} as any
+        })
+      )
+    )
+  );
+
 const eventsEpic = combineEpics(
   createEventEpic$,
   getAllEventsEpic$,
-  createRangeEpic$
+  createRangeEpic$,
+  getAllRangesEpic$
 );
 export { events, eventsEpic };
