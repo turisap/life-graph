@@ -18,7 +18,7 @@ const RouteWrapper: React.FC<RouteWrapperProps> = ({
   const history = useHistory();
 
   if (isPrivate && !signedId) {
-    return history.push("/");
+    history.push("/");
   }
 
   return <Route {...rest} render={props => <Component {...props} />} />;

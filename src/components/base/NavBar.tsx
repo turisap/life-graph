@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import { RootState } from "../../types";
+import { logoutAsync } from "../../redux/ducks/general";
 
 const getToken = (state: RootState) => state.general.user.accessToken;
 
@@ -43,6 +44,9 @@ const StyledNav = styled.nav`
 
 const NavBar = () => {
   const token = useSelector(getToken);
+
+  const dispatch = useDispatch();
+  const signUserOut = () => dispatch(logoutAsync.started({}));
   return (
     <StyledNav>
       <Link to="/" className="home">
@@ -59,7 +63,7 @@ const NavBar = () => {
           <Link to="/create-event">
             <span>Create</span>
           </Link>
-          <Link to="/signout">
+          <Link to="#" onClick={signUserOut}>
             <span>Sign Out</span>
           </Link>
         </>

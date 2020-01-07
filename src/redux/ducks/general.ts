@@ -24,6 +24,9 @@ export const logginAsync = generalActionCreator.async<
 export const setLoginSuccessFlag = generalActionCreator<boolean>(
   "setLoginSuccessFlag"
 );
+export const logoutAsync = generalActionCreator.async<any, any, any>(
+  "logoutAsync"
+);
 
 const DEFAULT_STATE: GeneralReducerState = {
   signedin: false,
@@ -68,6 +71,10 @@ general.case(setLoginSuccessFlag, state => ({
   loginSuccess: true
 }));
 
+general.case(logoutAsync.done, () => ({
+  ...DEFAULT_STATE
+}));
+
 const loggingEpic$ = action$ => {
   return action$.pipe(
     filter(logginAsync.started.match),
@@ -91,6 +98,28 @@ const loggingEpic$ = action$ => {
   );
 };
 
+const logoutEpic$ = action$ =>
+  action$.pipe(
+    filter(logoutAsync.started.match),
+    switchMap(() =>
+      from(
+        firestore
+          .auth()
+          .signOut()
+          .then(logoutAsync.done)
+          .catch(logoutAsync.failed)
+      )
+    ),
+    catchError(error =>
+      of(
+        logoutAsync.failed({
+          error,
+          params: {} as any
+        })
+      )
+    )
+  );
+
 const logginSuccessFlagEpic$ = action$ =>
   action$.pipe(
     filter(logginAsync.done.match),
@@ -98,5 +127,9 @@ const logginSuccessFlagEpic$ = action$ =>
     switchMap(() => of(setLoginSuccessFlag(true)))
   );
 
-const generalEpic = combineEpics(loggingEpic$, logginSuccessFlagEpic$);
+const generalEpic = combineEpics(
+  loggingEpic$,
+  logginSuccessFlagEpic$,
+  logoutEpic$
+);
 export { general, generalEpic };

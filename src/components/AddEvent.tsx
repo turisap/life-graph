@@ -55,7 +55,8 @@ const EventForm = styled.form`
   button {
     margin-top: auto;
     align-self: flex-end;
-    padding: 1rem;
+    padding: 1rem 1.5rem;
+    font-size: 1.6rem;
   }
 
   @media (max-width: 570px) and (orientation: portrait) {
@@ -201,9 +202,6 @@ const AddEvent = () => {
           <Button
             loadingState={eventIsLoading}
             onClickHandler={eventHandleSubmit}
-            width={15}
-            height={4}
-            fontSize={1.6}
             text="Add event"
           />
         </EventForm>
@@ -265,9 +263,6 @@ const AddEvent = () => {
             onClickHandler={rangeHandleSubmit}
             text="Add range"
             loadingState={rangeIsLoading}
-            width={15}
-            height={4}
-            fontSize={1.6}
           />
         </RangeForm>
       </Overlay>

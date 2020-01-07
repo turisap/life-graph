@@ -49,7 +49,7 @@ const App = () => {
           <Switch>
             <RouteWrapper component={Home} path="/" exact />
             <RouteWrapper component={Signin} path="/signin" exact />
-            <RouteWrapper component={AddEvent} path="/create-event" />
+            <RouteWrapper component={AddEvent} isPrivate path="/create-event" />
             <Route path="*" component={NotFound} />
           </Switch>
         </ThemeProvider>
