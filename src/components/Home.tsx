@@ -5,7 +5,7 @@ import {
   getAllEventsForCurrentYear,
   getAllRangesForCurrentYear
 } from "../redux/ducks/events";
-import { RootState, EventRange, Event, Week, Day } from "../types";
+import { RootState } from "../types";
 import Chart from "./base/Chart";
 
 // TODO clean up fields on forms submits

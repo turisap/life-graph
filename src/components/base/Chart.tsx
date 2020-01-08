@@ -172,7 +172,8 @@ const Chart: React.FC<ChartProps> = ({ events, ranges }) => {
   );
 
   const monthScale = getMonthScale();
-  const weeks = weeksToShow(ranges, events);
+  const realWeeks = weeksToShow(ranges, events);
+  const weeks = isEmpty(realWeeks) ? emptyWeeks : realWeeks;
 
   return (
     <Container>
