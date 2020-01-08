@@ -1,7 +1,5 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import moment from "moment";
-import { times } from "ramda";
 
 import {
   getAllEventsForCurrentYear,
@@ -22,24 +20,6 @@ const Home = () => {
     dispatch(getAllEventsForCurrentYear.started({}));
     dispatch(getAllRangesForCurrentYear.started({}));
   }, []);
-
-  const emptyDays = () =>
-    times(
-      () => ({
-        id: Math.random().toFixed(10),
-        color: "#ffffff",
-        title: "nothing"
-      }),
-      7
-    );
-
-  const emptyWeeks = times(
-    () => ({
-      id: Math.random(),
-      days: emptyDays()
-    }),
-    52
-  );
 
   return (
     <div className="ornament__background">

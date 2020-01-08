@@ -2,7 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import ReactTooltip from "react-tooltip";
 import moment from "moment";
-import { times } from "ramda";
+import { times, isEmpty, slice, compose, splitEvery } from "ramda";
+import uuid from "uuid/v4";
 
 import { EventRange, Event, Week, Day } from "../../types";
 
@@ -108,21 +109,70 @@ const Chart: React.FC<ChartProps> = ({ events, ranges }) => {
   };
 
   const getDaysOutOfRanges = (ranges: EventRange[], events: Event[]) => {
-    const days: Day[] = [];
+    let days: Day[] = [];
+
     const sortedRanges = ranges.sort((a, b) =>
       moment(a.startDate).isSameOrBefore(b.startDate) ? 1 : -1
     );
+    sortedRanges.forEach(({ startDate, endDate, rangeColor, rangeTitle }) => {
+      const start = moment(startDate);
+      const end = isEmpty(endDate) ? moment() : moment(endDate);
 
-    // get difference between start and end (days)
-    // use times to push those days into the days array
+      const daysInRange = end.diff(start, "days");
 
-    console.log(sortedRanges);
+      const dayObjects = times(
+        (): Day => ({
+          id: uuid(),
+          color: rangeColor,
+          title: rangeTitle
+        }),
+        daysInRange
+      );
+
+      days = days.concat(dayObjects);
+    });
+
+    return { days: slice(0, 365, days), events };
   };
 
-  getDaysOutOfRanges(ranges, events);
+  const applyEventsOnDays = ({ days, events }) => {
+    events.forEach((event: Event) => {
+      const positionAtYear = moment().diff(event.eventDate, "days");
+      days[positionAtYear] = {
+        id: uuid(),
+        color: event.eventColor,
+        title: event.eventTitle
+      };
+    });
+
+    return days;
+  };
+
+  const makeWeeksOutOfDays = (days: Day[]) => {
+    const weeks: Array<Week> = [];
+    const currentWeekDay = moment().day();
+    const currentWeek = days.splice(0, currentWeekDay);
+
+    weeks.push({ days: currentWeek, id: uuid() });
+
+    const restOfTheYear = splitEvery(7, days);
+    restOfTheYear.forEach(week =>
+      weeks.push({
+        days: week,
+        id: uuid()
+      })
+    );
+    return slice(1, 53, weeks.reverse());
+  };
+
+  const weeksToShow = compose(
+    makeWeeksOutOfDays,
+    applyEventsOnDays,
+    getDaysOutOfRanges
+  );
 
   const monthScale = getMonthScale();
-  const weeks = emptyWeeks;
+  const weeks = weeksToShow(ranges, events);
 
   return (
     <Container>

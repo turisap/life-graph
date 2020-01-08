@@ -4,7 +4,7 @@ import { reducerWithInitialState } from "typescript-fsa-reducers";
 import "typescript-fsa-redux-observable";
 import moment from "moment";
 import { from, of } from "rxjs";
-import { filter, exhaustMap, catchError, switchMap } from "rxjs/operators";
+import { filter, exhaustMap, catchError, switchMap, tap } from "rxjs/operators";
 
 import { db } from "../../../firebase/firebase";
 import {
@@ -31,6 +31,12 @@ export const getAllEventsForCurrentYear = eventsActionCreator.async(
 export const getAllRangesForCurrentYear = eventsActionCreator.async(
   "getAllRangesForCurrentYear"
 );
+
+export const getCurrentRange = eventsActionCreator.async<
+  any,
+  RangeResponse[],
+  any
+>("getCurrentRange");
 
 const DEFAULT_STATE: EventReducerState = {
   events: [],
@@ -82,6 +88,15 @@ events.case(getAllRangesForCurrentYear.done, (state, payload: any) => {
   return {
     ...state,
     eventRanges
+  };
+});
+
+events.case(getCurrentRange.done, (state, payload: any) => {
+  const lastRange: EventRange[] = [];
+  payload.forEach((doc: RangeResponse) => lastRange.push(doc.data()));
+  return {
+    ...state,
+    eventRanges: state.eventRanges.concat(lastRange)
   };
 });
 
@@ -148,7 +163,7 @@ const getAllEventsForCurrentYearEpic$ = action$ =>
       from(
         eventsRef
           .where(
-            "endDate",
+            "eventDate",
             ">",
             moment()
               .subtract(1, "year")
@@ -199,10 +214,33 @@ const getAllRangesForCurrentYearEpic$ = action$ =>
     )
   );
 
+const getCurrentRangeEpic$ = action$ =>
+  action$.pipe(
+    filter(getAllRangesForCurrentYear.done.match),
+    switchMap(() =>
+      from(
+        rangeRef
+          .where("endDate", "==", "")
+          .get()
+          .then(getCurrentRange.done)
+          .catch(getCurrentRange.failed)
+      )
+    ),
+    catchError(error =>
+      of(
+        getCurrentRange.failed({
+          error,
+          params: {} as any
+        })
+      )
+    )
+  );
+
 const eventsEpic = combineEpics(
   createEventEpic$,
   getAllEventsForCurrentYearEpic$,
   getAllRangesForCurrentYearEpic$,
-  createRangeEpic$
+  createRangeEpic$,
+  getCurrentRangeEpic$
 );
 export { events, eventsEpic };
