@@ -1,25 +1,18 @@
 import React from "react";
 import styled from "styled-components";
 import ReactTooltip from "react-tooltip";
+import moment from "moment";
+import { times } from "ramda";
+
+import { EventRange, Event, Week, Day } from "../../types";
 
 type ChartProps = {
-  weeks: Week[];
-  months: string[];
+  events: Event[];
+  ranges: EventRange[];
 };
 
 type WeekProps = {
   week: Week;
-};
-
-type Week = {
-  days: Day[];
-  id: number;
-};
-
-type Day = {
-  id: number;
-  color: string;
-  title?: string;
 };
 
 const Container = styled.div`
@@ -82,11 +75,59 @@ const StyledDay = styled.div<Day>`
   background: ${props => props.color};
 `;
 
-const Chart: React.FC<ChartProps> = ({ weeks, months }) => {
+const emptyDays = () =>
+  times(
+    () => ({
+      id: Math.random().toFixed(10),
+      color: "#ffffff",
+      title: "nothing"
+    }),
+    7
+  );
+
+const emptyWeeks = times(
+  () => ({
+    id: Math.random(),
+    days: emptyDays()
+  }),
+  52
+);
+
+const Chart: React.FC<ChartProps> = ({ events, ranges }) => {
+  const getMonthScale = () => {
+    const monthNames: string[] = [];
+    const lastMonth = moment().subtract(12, "months");
+    const currentMonth = moment();
+
+    while (currentMonth.diff(lastMonth, "month") > 0) {
+      monthNames.push(currentMonth.format("MMM"));
+      currentMonth.subtract(1, "month");
+    }
+
+    return monthNames;
+  };
+
+  const getDaysOutOfRanges = (ranges: EventRange[], events: Event[]) => {
+    const days: Day[] = [];
+    const sortedRanges = ranges.sort((a, b) =>
+      moment(a.startDate).isSameOrBefore(b.startDate) ? 1 : -1
+    );
+
+    // get difference between start and end (days)
+    // use times to push those days into the days array
+
+    console.log(sortedRanges);
+  };
+
+  getDaysOutOfRanges(ranges, events);
+
+  const monthScale = getMonthScale();
+  const weeks = emptyWeeks;
+
   return (
     <Container>
       <MonthScale>
-        {months.map(month => (
+        {monthScale.map(month => (
           <StyledMonth key={month}>{month}</StyledMonth>
         ))}
       </MonthScale>

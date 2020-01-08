@@ -1,34 +1,27 @@
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import { times } from "ramda";
 
-import { getAllEvents, getAllRanges } from "../redux/ducks/events";
+import {
+  getAllEventsForCurrentYear,
+  getAllRangesForCurrentYear
+} from "../redux/ducks/events";
+import { RootState, EventRange, Event, Week, Day } from "../types";
 import Chart from "./base/Chart";
 
 // TODO clean up fields on forms submits
-// TODO disable dates on form submit
+// TODO disable dates if end is before start
 
 const Home = () => {
   const dispatch = useDispatch();
+  const events = useSelector((state: RootState) => state.events.events);
+  const ranges = useSelector((state: RootState) => state.events.eventRanges);
 
   useEffect(() => {
-    dispatch(getAllEvents.started({}));
-    dispatch(getAllRanges.started({}));
+    dispatch(getAllEventsForCurrentYear.started({}));
+    dispatch(getAllRangesForCurrentYear.started({}));
   }, []);
-
-  const getMonthScale = () => {
-    const monthNames: string[] = [];
-    const lastMonth = moment().subtract(12, "months");
-    const currentMonth = moment();
-
-    while (currentMonth.diff(lastMonth, "month") > 0) {
-      monthNames.push(currentMonth.format("MMM"));
-      currentMonth.subtract(1, "month");
-    }
-
-    return monthNames;
-  };
 
   const emptyDays = () =>
     times(
@@ -51,7 +44,7 @@ const Home = () => {
   return (
     <div className="ornament__background">
       <div className="overlay">
-        <Chart weeks={emptyWeeks} months={getMonthScale()} />
+        <Chart events={events} ranges={ranges} />
       </div>
     </div>
   );

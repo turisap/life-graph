@@ -58,3 +58,16 @@ export type FireBaseResponse = {
 };
 export type EventResponse = Event & FireBaseResponse;
 export type RangeResponse = Range & FireBaseResponse;
+
+// shapes
+
+export type Week = {
+  days: Day[];
+  id: number;
+};
+
+export type Day = {
+  id: number;
+  color: string;
+  title?: string;
+};

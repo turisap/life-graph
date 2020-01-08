@@ -1,4 +1,3 @@
-import moment from "moment";
 import { SignInFormErrors, Event, EventRange } from "../types";
 
 const hexColorCodeRegex = /^#([0-9a-f]{6}|[0-9a-f]{3})$/i;
@@ -52,8 +51,6 @@ export const createRangeValidationRules = (values: EventRange) => {
   if (!values.startDate) {
     errors.startDate = "Start date is required";
   }
-  // if (!values.endDate) {
-  //   errors.endDate = "End date is required";
-  // }
+
   return errors;
 };

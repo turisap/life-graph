@@ -2,6 +2,7 @@ import { combineEpics } from "redux-observable";
 import actionCreatorFactory from "typescript-fsa";
 import { reducerWithInitialState } from "typescript-fsa-reducers";
 import "typescript-fsa-redux-observable";
+import moment from "moment";
 import { from, of } from "rxjs";
 import { filter, exhaustMap, catchError, switchMap } from "rxjs/operators";
 
@@ -24,8 +25,12 @@ export const postRangeToFireStore = eventsActionCreator.async<
   any,
   any
 >("postRangeToFireStore");
-export const getAllEvents = eventsActionCreator.async("getAllEvents");
-export const getAllRanges = eventsActionCreator.async("getAllRanges");
+export const getAllEventsForCurrentYear = eventsActionCreator.async(
+  "getAllEventsForCurrentYear"
+);
+export const getAllRangesForCurrentYear = eventsActionCreator.async(
+  "getAllRangesForCurrentYear"
+);
 
 const DEFAULT_STATE: EventReducerState = {
   events: [],
@@ -57,12 +62,12 @@ events.case(postRangeToFireStore.done, state => ({
   rangeLoading: false
 }));
 
-events.case(getAllEvents.started, state => ({
+events.case(getAllEventsForCurrentYear.started, state => ({
   ...state,
   homeDataLoading: true
 }));
 
-events.case(getAllEvents.done, (state, payload: any) => {
+events.case(getAllEventsForCurrentYear.done, (state, payload: any) => {
   const events: Event[] = [];
   payload.forEach((doc: EventResponse) => events.push(doc.data()));
   return {
@@ -71,7 +76,7 @@ events.case(getAllEvents.done, (state, payload: any) => {
   };
 });
 
-events.case(getAllRanges.done, (state, payload: any) => {
+events.case(getAllRangesForCurrentYear.done, (state, payload: any) => {
   const eventRanges: EventRange[] = [];
   payload.forEach((doc: RangeResponse) => eventRanges.push(doc.data()));
   return {
@@ -136,20 +141,28 @@ const createRangeEpic$ = action$ =>
     )
   );
 
-const getAllEventsEpic$ = action$ =>
+const getAllEventsForCurrentYearEpic$ = action$ =>
   action$.pipe(
-    filter(getAllEvents.started.match),
+    filter(getAllEventsForCurrentYear.started.match),
     exhaustMap(() =>
       from(
         eventsRef
+          .where(
+            "endDate",
+            ">",
+            moment()
+              .subtract(1, "year")
+              .utc()
+              .format()
+          )
           .get()
-          .then(getAllEvents.done)
-          .catch(getAllEvents.failed)
+          .then(getAllEventsForCurrentYear.done)
+          .catch(getAllEventsForCurrentYear.failed)
       )
     ),
     catchError(error =>
       of(
-        getAllEvents.failed({
+        getAllEventsForCurrentYear.failed({
           error,
           params: {} as any
         })
@@ -157,20 +170,28 @@ const getAllEventsEpic$ = action$ =>
     )
   );
 
-const getAllRangesEpic$ = action$ =>
+const getAllRangesForCurrentYearEpic$ = action$ =>
   action$.pipe(
-    filter(getAllRanges.started.match),
+    filter(getAllRangesForCurrentYear.started.match),
     switchMap(() =>
       from(
         rangeRef
+          .where(
+            "endDate",
+            ">",
+            moment()
+              .subtract(1, "year")
+              .utc()
+              .format()
+          )
           .get()
-          .then(getAllRanges.done)
-          .catch(getAllRanges.failed)
+          .then(getAllRangesForCurrentYear.done)
+          .catch(getAllRangesForCurrentYear.failed)
       )
     ),
     catchError(error =>
       of(
-        getAllRanges.failed({
+        getAllRangesForCurrentYear.failed({
           error,
           params: {} as any
         })
@@ -180,8 +201,8 @@ const getAllRangesEpic$ = action$ =>
 
 const eventsEpic = combineEpics(
   createEventEpic$,
-  getAllEventsEpic$,
-  createRangeEpic$,
-  getAllRangesEpic$
+  getAllEventsForCurrentYearEpic$,
+  getAllRangesForCurrentYearEpic$,
+  createRangeEpic$
 );
 export { events, eventsEpic };
