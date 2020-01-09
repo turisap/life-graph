@@ -206,7 +206,7 @@ const Week: React.FC<WeekProps> = ({ week }) => (
           data-for={day.id}
           data-tip={day.title}
         />
-        <ReactTooltip id={day.id} />
+        <ReactTooltip id={day.id} delayHide={60000} />
       </>
     ))}
   </StyledWeek>
