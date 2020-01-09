@@ -4,7 +4,6 @@ import styled from "styled-components";
 const Styled404 = styled.div`
   color: #454545;
   font-size: 18px;
-
   .panel {
     width: 750px;
     height: 500px;
@@ -14,7 +13,6 @@ const Styled404 = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-
     span {
       font-style: italic;
     }

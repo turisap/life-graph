@@ -1,12 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-
-import { RootState } from "../../types";
-import { logoutAsync } from "../../redux/ducks/general";
-
-const getToken = (state: RootState) => state.general.user.accessToken;
 
 const StyledNav = styled.nav`
   display: flex;
@@ -43,27 +37,23 @@ const StyledNav = styled.nav`
 `;
 
 const NavBar = () => {
-  const token = useSelector(getToken);
-
-  const dispatch = useDispatch();
-  const signUserOut = () => dispatch(logoutAsync.started({}));
   return (
     <StyledNav>
       <Link to="/" className="home">
         <span>Home</span>
       </Link>
       <div className="separator"></div>
-      {!token && (
+      {true && (
         <Link to="/signin">
           <span>Sign In</span>
         </Link>
       )}
-      {token && (
+      {true && (
         <>
           <Link to="/create-event">
             <span>Create</span>
           </Link>
-          <Link to="#" onClick={signUserOut}>
+          <Link to="#">
             <span>Sign Out</span>
           </Link>
         </>

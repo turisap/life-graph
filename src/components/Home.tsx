@@ -1,30 +1,5 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
 
-import {
-  getAllEventsForCurrentYear,
-  getAllRangesForCurrentYear
-} from "../redux/ducks/events";
-import { RootState } from "../types";
-import Chart from "./base/Chart";
-
-const Home = () => {
-  const dispatch = useDispatch();
-  const events = useSelector((state: RootState) => state.events.events);
-  const ranges = useSelector((state: RootState) => state.events.eventRanges);
-
-  useEffect(() => {
-    dispatch(getAllEventsForCurrentYear.started({}));
-    dispatch(getAllRangesForCurrentYear.started({}));
-  }, []);
-
-  return (
-    <div className="ornament__background">
-      <div className="overlay">
-        <Chart events={events} ranges={ranges} />
-      </div>
-    </div>
-  );
-};
+const Home = () => <h1>Home</h1>;
 
 export default Home;
