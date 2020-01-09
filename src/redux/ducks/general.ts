@@ -12,7 +12,6 @@ import {
 } from "rxjs/operators";
 
 import { GeneralReducerState } from "../../types";
-import { firestore } from "../../../firebase/firebase";
 
 const generalActionCreator = actionCreatorFactory("@General");
 
