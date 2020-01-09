@@ -94,6 +94,9 @@ const StyledForm = styled.form`
   grid-template-rows: 12rem 12rem 1.5rem 8rem 5rem;
   grid-template-columns: 1fr;
   align-items: center;
+  button {
+    height: 5rem;
+  }
 
   @media (max-width: 1025px) and (orientation: portrait) {
     justify-self: stretch;

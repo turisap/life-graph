@@ -4,7 +4,7 @@ import { reducerWithInitialState } from "typescript-fsa-reducers";
 import "typescript-fsa-redux-observable";
 import moment from "moment";
 import { from, of } from "rxjs";
-import { filter, exhaustMap, catchError, switchMap, tap } from "rxjs/operators";
+import { filter, exhaustMap, catchError, switchMap } from "rxjs/operators";
 
 import { db } from "../../../firebase/firebase";
 import {
@@ -14,6 +14,8 @@ import {
   Event,
   EventRange
 } from "../../types";
+
+import { logoutAsync } from "./general";
 
 const eventsActionCreator = actionCreatorFactory("@Events");
 
@@ -99,6 +101,10 @@ events.case(getCurrentRange.done, (state, payload: any) => {
     eventRanges: state.eventRanges.concat(lastRange)
   };
 });
+
+events.case(logoutAsync.done, () => ({
+  ...DEFAULT_STATE
+}));
 
 const eventsRef = db.collection("events");
 const rangeRef = db.collection("ranges");

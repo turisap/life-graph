@@ -39,7 +39,7 @@ const StyledButton = styled.button<ButtonProps>`
   }
 
   img {
-    height: ${props => props.height * 0.6 + "rem"};
+    height: 4rem;
   }
 
   @media (max-device-width: 500px) and (orientation: portrait) {
@@ -52,7 +52,7 @@ const Button: React.FC<ButtonProps> = props => {
     <StyledButton onClick={props.onClickHandler}>
       {props.loadingState ? (
         <Spinner
-          size={props.height ? props.height * 6 : 40}
+          size={30}
           spinnerColor={props.color ? props.color : "#333"}
           spinnerWidth={2}
           visible={true}

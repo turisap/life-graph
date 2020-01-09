@@ -8,9 +8,6 @@ import {
 import { RootState } from "../types";
 import Chart from "./base/Chart";
 
-// TODO clean up fields on forms submits
-// TODO disable dates if end is before start
-
 const Home = () => {
   const dispatch = useDispatch();
   const events = useSelector((state: RootState) => state.events.events);
