@@ -7,6 +7,7 @@
 
 - Frontend: `React`, `Typescript`, `redux-observable`, `rxjs`
 - Styling: SCSS, CSS grid and flexbox for layout, `styled-components`
+- Firestore for a simple backend
 
 ## Why
 

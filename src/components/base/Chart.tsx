@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import styled from "styled-components";
 import ReactTooltip from "react-tooltip";
 import moment from "moment";
@@ -162,6 +162,7 @@ const Chart: React.FC<ChartProps> = ({ events, ranges }) => {
         id: uuid()
       })
     );
+    console.log("call");
     return slice(1, 53, weeks.reverse());
   };
 
@@ -172,7 +173,10 @@ const Chart: React.FC<ChartProps> = ({ events, ranges }) => {
   );
 
   const monthScale = getMonthScale();
-  const realWeeks = weeksToShow(ranges, events);
+  const realWeeks = useMemo(() => weeksToShow(ranges, events), [
+    ranges,
+    events
+  ]);
   const weeks = isEmpty(realWeeks) ? emptyWeeks : realWeeks;
 
   return (
@@ -206,7 +210,7 @@ const Week: React.FC<WeekProps> = ({ week }) => (
           data-for={day.id}
           data-tip={day.title}
         />
-        <ReactTooltip id={day.id} delayHide={60000} />
+        <ReactTooltip id={day.id} />
       </>
     ))}
   </StyledWeek>
