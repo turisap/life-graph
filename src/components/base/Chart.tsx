@@ -162,7 +162,6 @@ const Chart: React.FC<ChartProps> = ({ events, ranges }) => {
         id: uuid()
       })
     );
-    console.log("call");
     return slice(1, 53, weeks.reverse());
   };
 

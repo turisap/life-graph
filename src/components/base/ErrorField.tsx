@@ -60,7 +60,7 @@ const StyledErrorField = styled.div`
     border: 1px solid ${props => props.theme.textError};
   }
 
-  @media (max-device-width: 500px) and (orientation: portrait) {
+  @media (max-width: 500px) and (orientation: portrait) {
     grid-template-rows: 6rem 6rem 1.3rem;
     font-size: 4rem;
   }
@@ -71,7 +71,7 @@ const Error = styled.p`
   font-size: 1.4rem;
   margin-top: 3px;
 
-  @media (max-device-width: 500px) and (orientation: portrait) {
+  @media (max-width: 500px) and (orientation: portrait) {
     font-size: 3rem;
   }
 `;

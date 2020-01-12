@@ -65,7 +65,7 @@ const StyledHeading = styled.div`
     align-self: end;
   }
 
-  @media (max-device-width: 500px) and (orientation: portrait) {
+  @media (max-width: 500px) and (orientation: portrait) {
     h1 {
       font-size: 13rem;
     }
@@ -115,7 +115,7 @@ const StyledForm = styled.form`
     grid-template-rows: 8rem 8rem 1.5rem 8rem 5rem;
   }
 
-  @media (max-device-width: 500px) and (orientation: portrait) {
+  @media (max-width: 500px) and (orientation: portrait) {
     grid-template-rows: 18rem 18rem 2.5rem 8rem 5rem;
   }
 `;
@@ -125,7 +125,7 @@ const StyledTinyInfo = styled.p`
   color: #6a737d;
   align-self: end;
 
-  @media (max-device-width: 500px) and (orientation: portrait) {
+  @media (max-width: 500px) and (orientation: portrait) {
     font-size: 2.2rem;
   }
 `;
@@ -135,7 +135,7 @@ const FormError = styled.p`
   font-size: 1.4rem;
   font-weight: 300;
 
-  @media (max-device-width: 500px) and (orientation: portrait) {
+  @media (max-width: 500px) and (orientation: portrait) {
     font-size: 3rem;
   }
 `;

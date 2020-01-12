@@ -42,7 +42,7 @@ const StyledButton = styled.button<ButtonProps>`
     height: 4rem;
   }
 
-  @media (max-device-width: 500px) and (orientation: portrait) {
+  @media (max-width: 500px) and (orientation: portrait) {
     font-size: 3rem;
   }
 `;

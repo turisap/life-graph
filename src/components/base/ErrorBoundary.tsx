@@ -19,9 +19,6 @@ class CustomError extends React.Component<ErrorProps, ErrorState> {
 
   componentDidCatch(error: any, info: any) {
     this.setState({ hasError: true, error, info });
-    console.log("Error:", error);
-    console.log("============================");
-    console.log("INfo:", info);
   }
 
   getInfo() {
@@ -35,7 +32,7 @@ class CustomError extends React.Component<ErrorProps, ErrorState> {
     if (this.state.hasError) {
       return (
         <>
-          <h1>Something went wrong.</h1>
+          <h1>Something went wrong :(</h1>
           <div>{this.getInfo()}</div>
         </>
       );

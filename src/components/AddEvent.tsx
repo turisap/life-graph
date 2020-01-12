@@ -35,7 +35,7 @@ const Overlay = styled.div`
     align-items: stretch;
   }
 
-  @media (max-device-width: 400px) and (orientation: portrait) {
+  @media (max-width: 400px) and (orientation: portrait) {
     flex-direction: column;
     align-items: stretch;
     justify-content: space-around;
@@ -69,7 +69,7 @@ const EventForm = styled.form`
     margin-top: 2rem;
   }
 
-  @media (max-device-width: 400px) and (orientation: portrait) {
+  @media (max-width: 400px) and (orientation: portrait) {
     height: auto;
     margin: 0rem;
     margin-top: 2rem;
